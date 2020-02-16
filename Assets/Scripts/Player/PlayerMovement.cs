@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Player
 {
@@ -12,6 +14,8 @@ namespace Assets.Scripts.Player
         private float m_CurrentTime;
         private float m_MaxHeightLimit;
         private float m_MinHeightLimit;
+        private float m_MinHorizontalMovement = 0;
+        private float m_MaxHorizontalMovement = 3;
 
         private void Start()
         {
@@ -27,6 +31,10 @@ namespace Assets.Scripts.Player
         public IEnumerator SetMovement(Vector3 direction)
         {
             if (direction == Vector3.zero || m_CurrentTime > 0)
+                yield break;
+
+            if (   direction == Vector3.right && transform.position.x >= m_MaxHorizontalMovement 
+                || direction == Vector3.left && transform.position.x <= m_MinHorizontalMovement)
                 yield break;
 
             if (direction == Vector3.up && transform.position.y >= m_MaxHeightLimit)
