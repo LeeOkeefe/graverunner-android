@@ -12,12 +12,12 @@ namespace Assets.Scripts.UI
         private void Start()
         {
             m_Text = GetComponent<TextMeshProUGUI>();
-            m_Text.text = $"Score: {ScoreManager.Amount}";
+            m_Text.text = $"{ScoreManager.Coins}";
         }
 
         public void UpdateScoreText()
         {
-            m_Text.text = $"Score: {ScoreManager.Amount}";
+            m_Text.text = $"{ScoreManager.Coins}";
         }
     }
 }

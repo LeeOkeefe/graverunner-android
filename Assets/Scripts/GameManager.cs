@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Player;
+using Assets.Scripts.UI;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -7,8 +9,13 @@ namespace Assets.Scripts
     {
         public static GameManager Instance { get; private set; }
 
+        public PlayerMovement PlayerMovement;
         public TextMeshProUGUI ScoreText;
+        public LivesUI LivesUI;
+        public HealthObject HealthObject;
 
+        // Ensure only one instance of the GameManager exists
+        //
         public void Awake()
         {
             if (Instance != null)
@@ -16,6 +23,11 @@ namespace Assets.Scripts
 
             if (Instance == null)
                 Instance = this;
+        }
+
+        public void GameOver()
+        {
+            Debug.Log("GAME OVER.");
         }
     }
 }
