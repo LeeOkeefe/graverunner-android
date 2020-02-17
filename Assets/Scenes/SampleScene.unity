@@ -1839,7 +1839,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1006190121
 Animator:
   serializedVersion: 3
@@ -2641,7 +2641,6 @@ MonoBehaviour:
   m_SpawnObjects:
   - {fileID: 4860822168999005729, guid: cf6633a85a4b2784abf4bf67c869d186, type: 3}
   - {fileID: 8785602719558548692, guid: 50231cbe44c13244e8e0127befbd8322, type: 3}
-  m_Player: {fileID: 169637750}
 --- !u!1 &1338859386
 GameObject:
   m_ObjectHideFlags: 0
