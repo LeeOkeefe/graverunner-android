@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Numerics;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Player
 {
@@ -9,7 +7,8 @@ namespace Assets.Scripts.Player
     {
         private Rigidbody2D m_Rb;
 
-        [SerializeField][Range(0, 1)]
+        [SerializeField]
+        [Range(0, 1)]
         private float m_LerpTime = 0.25f;
         private float m_CurrentTime;
         private float m_MaxHeightLimit;
@@ -21,7 +20,7 @@ namespace Assets.Scripts.Player
         {
             m_Rb = GetComponent<Rigidbody2D>();
             var startHeight = transform.position.y;
-            m_MaxHeightLimit = startHeight + Vector3.up.y;
+            m_MaxHeightLimit = startHeight + Vector3.up.y + 2;
             m_MinHeightLimit = startHeight;
         }
 
@@ -33,16 +32,22 @@ namespace Assets.Scripts.Player
             if (direction == Vector3.zero || m_CurrentTime > 0)
                 yield break;
 
-            if (   direction == Vector3.right && transform.position.x >= m_MaxHorizontalMovement 
+            if (direction == Vector3.right && transform.position.x >= m_MaxHorizontalMovement
                 || direction == Vector3.left && transform.position.x <= m_MinHorizontalMovement)
                 yield break;
 
             if (direction == Vector3.up && transform.position.y >= m_MaxHeightLimit)
+            {
+                GameManager.Instance.MaxRestrictionLine.Play();
                 yield break;
+            }
 
             if (direction == Vector3.down && transform.position.y <= m_MinHeightLimit)
+            {
+                GameManager.Instance.MinRestrictionLine.Play();
                 yield break;
-
+            }
+                
             var startPos = transform.position;
             var endPos = transform.position + direction;
 

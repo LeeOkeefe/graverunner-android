@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Assets.Scripts.GridGeneration;
 using UnityEngine;
-
-using Random = System.Random;
 
 namespace Assets.Scripts.Objects
 {
