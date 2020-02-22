@@ -5,10 +5,11 @@ namespace Assets.Scripts.Objects
 {
     internal abstract class ScrollableObject : MonoBehaviour
     {
-        private static float Speed => GameManager.Instance.ObjectFallingSpeed;
+        private EnvironmentHandler m_Environment;
 
         private void Start()
         {
+            m_Environment = GameManager.Instance.EnvironmentHandler;
             StartCoroutine(HandleScrollingObject());
         }
 
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Objects
         {
             while (!HasScrolledOutOfView())
             {
-                transform.Translate(Vector2.down * Speed);
+                transform.Translate(Vector2.down * m_Environment.m_PrefabSpeed);
                 yield return null;
             }
 

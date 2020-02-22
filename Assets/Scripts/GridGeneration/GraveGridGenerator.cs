@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using Random = System.Random;
 
@@ -17,14 +16,15 @@ namespace Assets.Scripts.GridGeneration
             Width = width;
         }
 
+        /// <summary>
+        /// Generate a random path of open points starting from the bottom row
+        /// </summary>
         public List<Vector2> GeneratePath()
         {
             var openPoints = new List<Vector2>();
 
             var random = new Random();
             
-            // Start with the bottom row
-            // Picking one at random
             var randomPoint = random.Next(Width);
 
             var currentX = randomPoint;
@@ -37,7 +37,6 @@ namespace Assets.Scripts.GridGeneration
 
             while (currentY < Height - 1)
             {
-                // Loop through the logic :D
                 var directions = GetValidDirections(currentX, lastDirection);
 
                 var direction = directions[random.Next(directions.Count)];
@@ -62,6 +61,9 @@ namespace Assets.Scripts.GridGeneration
             return openPoints;
         }
 
+        /// <summary>
+        /// Check the directions that can be used for the next open point
+        /// </summary>
         private List<GridDirection> GetValidDirections(int x, GridDirection lastDirection)
         {
             var validDirections = new List<GridDirection>
