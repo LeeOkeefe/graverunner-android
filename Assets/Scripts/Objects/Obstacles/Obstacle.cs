@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets.Scripts.Extensions;
+using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Objects.Obstacles
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Objects.Obstacles
             if (!col.transform.CompareTag("Player"))
                 return;
 
+            Camera.main.Shake();
             Instantiate(m_Particles, transform.position, Quaternion.identity);
             col.GetComponent<HealthObject>().Damage();
             Destroy(gameObject);

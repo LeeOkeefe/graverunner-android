@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using Assets.Scripts.GridGeneration;
 using Assets.Scripts.Player;
 using Assets.Scripts.UI;
@@ -16,6 +15,10 @@ namespace Assets.Scripts
         public TextMeshProUGUI ScoreText;
         public LivesUI LivesUI;
         public HealthObject HealthObject;
+        public Animation MaxRestrictionLine;
+        public Animation MinRestrictionLine;
+        public float BackgroundRepeatSpeed = 0.215f;
+        public float ObjectFallingSpeed = 0.015f;
 
         public List<Vector2> Grid;
 

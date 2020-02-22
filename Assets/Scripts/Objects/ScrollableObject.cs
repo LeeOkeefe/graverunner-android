@@ -5,8 +5,7 @@ namespace Assets.Scripts.Objects
 {
     internal abstract class ScrollableObject : MonoBehaviour
     {
-        [SerializeField][Range(0, 0.1f)] 
-        private float m_Speed = 0.015f;
+        private static float Speed => GameManager.Instance.ObjectFallingSpeed;
 
         private void Start()
         {
@@ -20,7 +19,7 @@ namespace Assets.Scripts.Objects
         {
             while (!HasScrolledOutOfView())
             {
-                transform.Translate(Vector2.down * m_Speed);
+                transform.Translate(Vector2.down * Speed);
                 yield return null;
             }
 
