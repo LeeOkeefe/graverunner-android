@@ -12,7 +12,7 @@ namespace Assets.Scripts.Objects
         private int m_Columns = 4;
         private GraveGridGenerator m_GraveGenerator;
 
-        private float timeSinceLastGridGeneration = 0f;
+        private float m_TimeSinceLastGridGeneration;
 
         private void Awake()
         {
@@ -24,16 +24,21 @@ namespace Assets.Scripts.Objects
             GenerateGraveGrid(5);
         }
 
+        // Generate a new grid every X seconds
+        //
         private void Update()
         {
-            timeSinceLastGridGeneration += Time.deltaTime;
-            if (timeSinceLastGridGeneration >= 25f)
+            m_TimeSinceLastGridGeneration += Time.deltaTime;
+            if (m_TimeSinceLastGridGeneration >= 10f)
             {
-                timeSinceLastGridGeneration -= 25f;
+                m_TimeSinceLastGridGeneration -= 10f;
                 GenerateGraveGrid(5);
             }
         }
 
+        /// <summary>
+        /// Generate grid and instantiate prefab based on the open path
+        /// </summary>
         private void GenerateGraveGrid(int heightOffset)
         {
             var openPath = m_GraveGenerator.GeneratePath();

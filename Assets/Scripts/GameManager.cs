@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.GridGeneration;
 using Assets.Scripts.Player;
 using Assets.Scripts.UI;
@@ -17,9 +18,7 @@ namespace Assets.Scripts
         public HealthObject HealthObject;
         public Animation MaxRestrictionLine;
         public Animation MinRestrictionLine;
-        public float BackgroundRepeatSpeed = 0.215f;
-        public float ObjectFallingSpeed = 0.015f;
-
+        public EnvironmentHandler EnvironmentHandler;
         public List<Vector2> Grid;
 
         // Ensure only one instance of the GameManager exists
