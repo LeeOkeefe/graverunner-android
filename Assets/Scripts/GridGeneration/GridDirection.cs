@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.GridGeneration
+﻿namespace GridGeneration
 {
     public enum GridDirection
     {

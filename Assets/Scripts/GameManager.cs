@@ -1,51 +1,42 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.GridGeneration;
-using Assets.Scripts.Player;
-using Assets.Scripts.Score;
-using Assets.Scripts.UI;
+using GridGeneration;
+using Player;
+using Score;
 using TMPro;
+using UI;
 using UnityEngine;
 
-namespace Assets.Scripts
+internal sealed class GameManager : MonoBehaviour
 {
-    internal sealed class GameManager : MonoBehaviour
+    public static GameManager Instance { get; private set; }
+
+    public PlayerMovement PlayerMovement;
+    public TextMeshProUGUI ScoreText;
+    public LivesUI LivesUI;
+    public HealthObject HealthObject;
+    public Animation MinRestrictionLine;
+
+    public List<Vector2> Grid;
+    public ScoreManager ScoreManager;
+
+    // Ensure only one instance of the GameManager exists
+    //
+    public void Awake()
     {
-        public static GameManager Instance { get; private set; }
+        if (Instance != null)
+            Destroy(this);
 
-        public PlayerMovement PlayerMovement;
-        public TextMeshProUGUI ScoreText;
-        public LivesUI LivesUI;
-        public HealthObject HealthObject;
-        public Animation MaxRestrictionLine;
-        public Animation MinRestrictionLine;
-        public float BackgroundRepeatSpeed = 0.215f;
-        public float ObjectFallingSpeed = 0.015f;
+        if (Instance == null)
+            Instance = this;
 
-        public List<Vector2> Grid;
+        var gravegridgenerator = new GraveGridGenerator(8, 4);
 
-        // Ensure only one instance of the GameManager exists
-        //
-        public void Awake()
-        {
-            if (Instance != null)
-                Destroy(this);
+        Grid = gravegridgenerator.GeneratePath();
+        ScoreManager = new ScoreManager();
+    }
 
-            if (Instance == null)
-                Instance = this;
-
-            var gravegridgenerator = new GraveGridGenerator(8, 4);
-
-            Grid = gravegridgenerator.GeneratePath();
-        }
-
-        private void OnEnable()
-        {
-            ScoreManager.ResetScore();
-        }
-
-        public void GameOver()
-        {
-            Debug.Log("GAME OVER.");
-        }
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER.");
     }
 }

@@ -1,31 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Assets.Scripts.GridGeneration
+namespace GridGeneration
 {
     internal sealed class GraveGridGenerator
     {
-        public int Height { get; }
-
-        public int Width { get; }
-
-        public GraveGridGenerator(int height, int width)
-        {
-            Height = height;
-            Width = width;
-        }
-
-        public List<Vector2> GeneratePath()
+        public List<Vector2> GeneratePath(int height, int width)
         {
             var openPoints = new List<Vector2>();
 
             var random = new Random();
             
-            // Start with the bottom row
-            // Picking one at random
-            var randomPoint = random.Next(Width);
+            var randomPoint = random.Next(width);
 
             var currentX = randomPoint;
             var currentY = 0;
@@ -35,10 +22,9 @@ namespace Assets.Scripts.GridGeneration
             currentY++;
             openPoints.Add(new Vector2(currentX, currentY));
 
-            while (currentY < Height - 1)
+            while (currentY < height - 1)
             {
-                // Loop through the logic :D
-                var directions = GetValidDirections(currentX, lastDirection);
+                var directions = GetValidDirections(currentX, width, lastDirection);
 
                 var direction = directions[random.Next(directions.Count)];
 
@@ -62,7 +48,7 @@ namespace Assets.Scripts.GridGeneration
             return openPoints;
         }
 
-        private List<GridDirection> GetValidDirections(int x, GridDirection lastDirection)
+        private List<GridDirection> GetValidDirections(int x, int width, GridDirection lastDirection)
         {
             var validDirections = new List<GridDirection>
             {
@@ -74,7 +60,7 @@ namespace Assets.Scripts.GridGeneration
                 validDirections.Add(GridDirection.Left);
             }
 
-            if (x < Width - 1 && lastDirection != GridDirection.Left)
+            if (x < width - 1 && lastDirection != GridDirection.Left)
             {
                 validDirections.Add(GridDirection.Right);
             }

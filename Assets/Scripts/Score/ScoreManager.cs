@@ -1,37 +1,37 @@
 ﻿using TMPro;
 
-namespace Assets.Scripts.Score
+namespace Score
 {
-    public static class ScoreManager
+    public class ScoreManager
     {
-        public static int Coins { get; private set; }
-        private static TextMeshProUGUI ScoreText => GameManager.Instance.ScoreText;
+        public  int Coins { get; private set; }
+        private TextMeshProUGUI ScoreText => GameManager.Instance.ScoreText;
 
-        public static void IncreaseScore()
+        public void IncreaseScore()
         {
             Coins++;
             ScoreText.text = $"{Coins}";
         }
 
-        public static void IncreaseScore(int amount)
+        public void IncreaseScore(int amount)
         {
             Coins += amount;
             ScoreText.text = $"{Coins}";
         }
 
-        public static void DecreaseAmount()
+        public void DecreaseAmount()
         {
             Coins--;
             ScoreText.text = $"{Coins}";
         }
 
-        public static void DecreaseScore(int amount)
+        public void DecreaseScore(int amount)
         {
             Coins -= amount;
             ScoreText.text = $"{Coins}";
         }
 
-        public static void ResetScore()
+        public void ResetScore()
         {
             Coins = 0;
             ScoreText.text = $"{Coins}";

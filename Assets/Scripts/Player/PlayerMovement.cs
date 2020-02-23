@@ -1,63 +1,66 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Player
 {
     internal sealed class PlayerMovement : MonoBehaviour
     {
-        private Rigidbody2D m_Rb;
-
-        [SerializeField]
-        [Range(0, 1)]
-        private float m_LerpTime = 0.25f;
         private float m_CurrentTime;
-        private float m_MaxHeightLimit;
-        private float m_MinHeightLimit;
+        private float m_FurthestDistance;
+        private float m_MinimumOffsetY = 3;
         private float m_MinHorizontalMovement = 0;
         private float m_MaxHorizontalMovement = 3;
 
+        private Vector3 m_TargetPos;
+        [SerializeField] private float m_LerpSpeed = 6;
+        [SerializeField] private float m_MoveSpeed = 1;
+
         private void Start()
         {
-            m_Rb = GetComponent<Rigidbody2D>();
             var startHeight = transform.position.y;
-            m_MaxHeightLimit = startHeight + Vector3.up.y + 2;
-            m_MinHeightLimit = startHeight;
+            m_FurthestDistance = startHeight;
+            m_TargetPos = transform.position;
+        }
+
+        private void Update()
+        {
+            var myPos = transform.position;
+            var newPos = new Vector3(myPos.x, myPos.y + m_MoveSpeed * Time.deltaTime, myPos.z);
+
+            m_TargetPos = new Vector3(m_TargetPos.x, m_TargetPos.y + m_MoveSpeed * Time.deltaTime, m_TargetPos.z);
+            transform.Translate(newPos - myPos);
+            
+            if (newPos.y > m_FurthestDistance)
+            {
+                m_FurthestDistance = myPos.y;
+            }
+
+            if (transform.position != m_TargetPos)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, m_TargetPos, m_LerpSpeed * Time.deltaTime);
+            }
         }
 
         /// <summary>
-        /// Lerp one unit in the given direction
+        /// Change target position based on direction of swipe
         /// </summary>
-        public IEnumerator SetMovement(Vector3 direction)
+        public void HandleSwipeGesture(Vector3 direction)
         {
+            var targetPos = m_TargetPos + direction;
+
             if (direction == Vector3.zero || m_CurrentTime > 0)
-                yield break;
+                return;
 
-            if (direction == Vector3.right && transform.position.x >= m_MaxHorizontalMovement
-                || direction == Vector3.left && transform.position.x <= m_MinHorizontalMovement)
-                yield break;
-
-            if (direction == Vector3.up && transform.position.y >= m_MaxHeightLimit)
-            {
-                GameManager.Instance.MaxRestrictionLine.Play();
-                yield break;
-            }
-
-            if (direction == Vector3.down && transform.position.y <= m_MinHeightLimit)
+            if (targetPos.x > m_MaxHorizontalMovement || targetPos.x < m_MinHorizontalMovement)
+                return;
+            
+            if (targetPos.y < m_FurthestDistance - m_MinimumOffsetY)
             {
                 GameManager.Instance.MinRestrictionLine.Play();
-                yield break;
+                return;
             }
-                
-            var startPos = transform.position;
-            var endPos = transform.position + direction;
 
-            while (m_CurrentTime < m_LerpTime)
-            {
-                m_CurrentTime += Time.deltaTime;
-                m_Rb.MovePosition(Vector3.Lerp(startPos, endPos, m_CurrentTime / m_LerpTime));
-                yield return null;
-            }
-            m_CurrentTime = 0;
+            m_TargetPos = targetPos;
         }
     }
 }

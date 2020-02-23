@@ -1,9 +1,7 @@
-﻿using System.Net.Mime;
-using Assets.Scripts.Score;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.UI
+namespace UI
 {
     internal sealed class ScoreUI : MonoBehaviour
     {
@@ -12,12 +10,12 @@ namespace Assets.Scripts.UI
         private void Start()
         {
             m_Text = GetComponent<TextMeshProUGUI>();
-            m_Text.text = $"{ScoreManager.Coins}";
+            m_Text.text = $"{GameManager.Instance.ScoreManager.Coins}";
         }
 
         public void UpdateScoreText()
         {
-            m_Text.text = $"{ScoreManager.Coins}";
+            m_Text.text = $"{GameManager.Instance.ScoreManager.Coins}";
         }
     }
 }

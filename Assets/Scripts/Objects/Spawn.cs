@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Assets.Scripts.GridGeneration;
+using GridGeneration;
 using UnityEngine;
 
-namespace Assets.Scripts.Objects
+namespace Objects
 {
     internal sealed class Spawn : MonoBehaviour
     {

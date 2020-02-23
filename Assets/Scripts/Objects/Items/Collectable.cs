@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.Score;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Objects.Items
+namespace Objects.Items
 {
-    internal sealed class Collectable : ScrollableObject
+    internal sealed class Collectable : MonoBehaviour
     {
         [SerializeField] private GameObject m_Particles;
 
@@ -13,7 +12,7 @@ namespace Assets.Scripts.Objects.Items
                 return;
 
             Instantiate(m_Particles, transform.position, Quaternion.identity);
-            ScoreManager.IncreaseScore();
+            GameManager.Instance.ScoreManager.IncreaseScore();
             Destroy(gameObject);
         }
     }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Extensions
+namespace Extensions
 {
     internal static class CanvasGroupExtensions
     {

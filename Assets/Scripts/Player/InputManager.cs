@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Player
+namespace Player
 {
     internal sealed class InputManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
@@ -26,6 +26,7 @@ namespace Assets.Scripts.Player
         //
         public void OnPointerUp(PointerEventData eventData)
         {
+            print("ON POINTER UP");
             var deltaSwipe = m_TouchPosition - Input.mousePosition;
 
             if (Mathf.Abs(deltaSwipe.x) > 100)
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Player
                 m_InputDirection = deltaSwipe.y < 0 ? Vector3.up : Vector3.down;
             }
 
-            StartCoroutine(m_PlayerMovement.SetMovement(m_InputDirection));
+            m_PlayerMovement.HandleSwipeGesture(m_InputDirection);
         }
     }
 }

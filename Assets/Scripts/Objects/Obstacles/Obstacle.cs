@@ -1,19 +1,20 @@
-﻿using Assets.Scripts.Extensions;
-using Assets.Scripts.Player;
+﻿using Extensions;
+using Player;
 using UnityEngine;
 
-namespace Assets.Scripts.Objects.Obstacles
+namespace Objects.Obstacles
 {
-    internal sealed class Obstacle : ScrollableObject
+    internal sealed class Obstacle : MonoBehaviour
     {
         [SerializeField] private GameObject m_Particles;
 
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (!col.transform.CompareTag("Player"))
-                return;
-
-            Camera.main.Shake();
+                return; 
+            
+            //TODO: Come back to Camera shake :D
+            //StartCoroutine(Camera.main.Shake(0.5f, 0.5f));
             Instantiate(m_Particles, transform.position, Quaternion.identity);
             col.GetComponent<HealthObject>().Damage();
             Destroy(gameObject);
