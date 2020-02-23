@@ -38,7 +38,7 @@ namespace Player
                 m_InputDirection = deltaSwipe.y < 0 ? Vector3.up : Vector3.down;
             }
 
-            StartCoroutine(m_PlayerMovement.HandleSwipeGesture(m_InputDirection));
+            m_PlayerMovement.HandleSwipeGesture(m_InputDirection);
         }
     }
 }

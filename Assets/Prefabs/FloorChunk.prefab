@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6264966700550787705}
   - component: {fileID: 7069881213115384672}
+  - component: {fileID: 1095261775}
   m_Layer: 0
-  m_Name: Grass Background
+  m_Name: FloorChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,3 +81,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1095261775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264966700550787704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b36c70929140e43ab61b29c519516a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MainCamera: {fileID: 0}
+  m_Top: {x: 0, y: 0, z: 0}

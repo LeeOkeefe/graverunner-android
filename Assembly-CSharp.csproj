@@ -66,8 +66,11 @@
     <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\CanvasGroupExtensions.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GridGeneration\GhostGridGenerator.cs" />
     <Compile Include="Assets\Scripts\GridGeneration\GraveGridGenerator.cs" />
     <Compile Include="Assets\Scripts\GridGeneration\GridDirection.cs" />
+    <Compile Include="Assets\Scripts\Objects\ChunkGeneration.cs" />
+    <Compile Include="Assets\Scripts\Objects\DestroyOffScreen.cs" />
     <Compile Include="Assets\Scripts\Objects\Items\Collectable.cs" />
     <Compile Include="Assets\Scripts\Objects\Obstacles\Obstacle.cs" />
     <Compile Include="Assets\Scripts\Objects\SelfDestruct.cs" />

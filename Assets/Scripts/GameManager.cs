@@ -14,7 +14,6 @@ internal sealed class GameManager : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public LivesUI LivesUI;
     public HealthObject HealthObject;
-    public Animation MaxRestrictionLine;
     public Animation MinRestrictionLine;
 
     public List<Vector2> Grid;
