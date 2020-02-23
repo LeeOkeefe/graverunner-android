@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.GridGeneration;
 using Assets.Scripts.Player;
+using Assets.Scripts.Score;
 using Assets.Scripts.UI;
 using TMPro;
 using UnityEngine;
@@ -35,6 +36,11 @@ namespace Assets.Scripts
             var gravegridgenerator = new GraveGridGenerator(8, 4);
 
             Grid = gravegridgenerator.GeneratePath();
+        }
+
+        private void OnEnable()
+        {
+            ScoreManager.ResetScore();
         }
 
         public void GameOver()

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
+     <Compile Include="Assets\Scripts\Extensions\CanvasGroupExtensions.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GridGeneration\GraveGridGenerator.cs" />
      <Compile Include="Assets\Scripts\GridGeneration\GridDirection.cs" />
@@ -71,7 +72,10 @@
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Score\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\UI\LivesUI.cs" />
+     <Compile Include="Assets\Scripts\UI\MusicSettings.cs" />
      <Compile Include="Assets\Scripts\UI\ScoreUI.cs" />
+     <Compile Include="Assets\Scripts\UI\SettingsManager.cs" />
+     <Compile Include="Assets\Scripts\UI\SoundEffectsSettings.cs" />
      <None Include="Assets\Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
      <None Include="Assets\Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
