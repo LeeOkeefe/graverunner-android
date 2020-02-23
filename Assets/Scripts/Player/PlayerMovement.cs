@@ -16,8 +16,6 @@ namespace Assets.Scripts.Player
         private float m_MinHorizontalMovement = 0;
         private float m_MaxHorizontalMovement = 3;
 
-        [SerializeField] private EnvironmentHandler m_Environment;
-
         private void Start()
         {
             m_Rb = GetComponent<Rigidbody2D>();
@@ -60,51 +58,6 @@ namespace Assets.Scripts.Player
                 yield return null;
             }
             m_CurrentTime = 0;
-            CalculateSpeed();
         }
-
-        private void CalculateSpeed()
-        {
-            var charHeight = GetCharacterGridHeight();
-
-            switch (charHeight)
-            {
-                case CharacterGridHeight.Low:
-                    m_Environment.SetEnvironmentSpeed(0.225f, 0.0225f);
-                    break;
-                case CharacterGridHeight.Middle:
-                    m_Environment.SetEnvironmentSpeed(0.25f, 0.025f);
-                    break;
-                case CharacterGridHeight.High:
-                    m_Environment.SetEnvironmentSpeed(0.275f, 0.0275f);
-                    break;
-                default:
-                    m_Environment.SetEnvironmentSpeed(0.2f, 0.02f);
-                    break;
-            }
-        }
-
-        private CharacterGridHeight GetCharacterGridHeight()
-        {
-            switch (transform.position.y)
-            {
-                case -1:
-                    return CharacterGridHeight.Low;
-                case 0:
-                    return CharacterGridHeight.Middle;
-                case 1:
-                    return CharacterGridHeight.High;
-                default:
-                    return CharacterGridHeight.Bottom;
-            }
-        }
-    }
-
-    public enum CharacterGridHeight
-    {
-        Bottom,
-        Low,
-        Middle,
-        High
     }
 }

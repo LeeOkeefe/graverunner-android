@@ -55,7 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\EnvironmentHandler.cs" />
      <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GridGeneration\GraveGridGenerator.cs" />

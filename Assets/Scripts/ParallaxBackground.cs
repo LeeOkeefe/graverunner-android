@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
     internal sealed class ParallaxBackground : MonoBehaviour
     {
-        [SerializeField] private EnvironmentHandler m_Environment;
+        private static float Speed => GameManager.Instance.BackgroundRepeatSpeed;
 
         private Renderer m_Renderer;
 
@@ -15,7 +15,7 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            m_Renderer.material.mainTextureOffset = new Vector2(0, Time.time * m_Environment.m_ParallaxSpeed);
+            m_Renderer.material.mainTextureOffset = new Vector2(0, Time.time * Speed);
         }
     }
 }
