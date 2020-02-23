@@ -30,5 +30,11 @@ namespace Assets.Scripts.Score
             Coins -= amount;
             ScoreText.text = $"{Coins}";
         }
+
+        public static void ResetScore()
+        {
+            Coins = 0;
+            ScoreText.text = $"{Coins}";
+        }
     }
 }
