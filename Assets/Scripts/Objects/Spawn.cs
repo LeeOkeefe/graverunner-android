@@ -12,7 +12,7 @@ namespace Assets.Scripts.Objects
         private int m_Columns = 4;
         private GraveGridGenerator m_GraveGenerator;
 
-        private float timeSinceLastGridGeneration = 0f;
+        private float m_TimeSinceLastGridGeneration;
 
         private void Awake()
         {
@@ -26,10 +26,10 @@ namespace Assets.Scripts.Objects
 
         private void Update()
         {
-            timeSinceLastGridGeneration += Time.deltaTime;
-            if (timeSinceLastGridGeneration >= 25f)
+            m_TimeSinceLastGridGeneration += Time.deltaTime;
+            if (m_TimeSinceLastGridGeneration >= 10f)
             {
-                timeSinceLastGridGeneration -= 25f;
+                m_TimeSinceLastGridGeneration -= 10f;
                 GenerateGraveGrid(5);
             }
         }
