@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Player
 {
     internal sealed class HealthObject : MonoBehaviour
     {

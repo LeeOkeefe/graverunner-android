@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Extensions;
+﻿using Extensions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.UI
+namespace UI
 {
     internal sealed class SettingsManager : MonoBehaviour
     {

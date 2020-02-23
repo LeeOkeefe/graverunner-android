@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Objects
+namespace Objects
 {
     internal sealed class SelfDestruct : MonoBehaviour
     {

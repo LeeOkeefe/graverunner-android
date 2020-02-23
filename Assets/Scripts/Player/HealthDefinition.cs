@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts.Player
+namespace Player
 {
     internal sealed class HealthDefinition
     {

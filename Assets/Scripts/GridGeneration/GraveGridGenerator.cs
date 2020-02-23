@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Assets.Scripts.GridGeneration
+namespace GridGeneration
 {
     internal sealed class GraveGridGenerator
     {
@@ -23,8 +22,6 @@ namespace Assets.Scripts.GridGeneration
 
             var random = new Random();
             
-            // Start with the bottom row
-            // Picking one at random
             var randomPoint = random.Next(Width);
 
             var currentX = randomPoint;
@@ -37,7 +34,6 @@ namespace Assets.Scripts.GridGeneration
 
             while (currentY < Height - 1)
             {
-                // Loop through the logic :D
                 var directions = GetValidDirections(currentX, lastDirection);
 
                 var direction = directions[random.Next(directions.Count)];
