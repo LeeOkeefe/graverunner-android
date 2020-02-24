@@ -14,19 +14,15 @@ namespace Player
             m_PlayerMovement = GameManager.Instance.PlayerMovement;
         }
 
-        // Store the initial position of the touch
-        //
         public void OnPointerDown(PointerEventData eventData)
         {
             m_TouchPosition = Input.mousePosition;
         }
 
-        // Calculate which direction the user swiped
-        // Pass the direction to PlayerMovement class
+        // Calculate swipe direction for PlayerMovement
         //
         public void OnPointerUp(PointerEventData eventData)
         {
-            print("ON POINTER UP");
             var deltaSwipe = m_TouchPosition - Input.mousePosition;
 
             if (Mathf.Abs(deltaSwipe.x) > 100)
