@@ -2459,7 +2459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 169637750}
-  m_LerpTime: 5
+  m_MovementSpeed: 2
   m_OffsetY: 2
 --- !u!1 &584631462
 GameObject:
