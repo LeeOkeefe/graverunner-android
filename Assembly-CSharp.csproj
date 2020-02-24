@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Player\InputManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Score\ScoreManager.cs" />
+     <Compile Include="Assets\Scripts\UI\GameOverManager.cs" />
      <Compile Include="Assets\Scripts\UI\LivesUI.cs" />
      <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
      <Compile Include="Assets\Scripts\UI\MusicSettings.cs" />

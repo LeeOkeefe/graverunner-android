@@ -1,5 +1,4 @@
 ﻿using Extensions;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,18 +21,10 @@ namespace UI
             TogglePause();
         }
 
-        public void ReturnToMenu()
+        public void ExitGame()
         {
             SceneManager.LoadScene("Menu");
-        }
-
-        public void QuitGame()
-        {
-#if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            TogglePause();
         }
 
         private void TogglePause()

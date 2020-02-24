@@ -11,6 +11,11 @@ namespace UI
             SceneManager.LoadScene("Game");
         }
 
+        public void Menu()
+        {
+            SceneManager.LoadScene("Menu");
+        }
+
         public void QuitGame()
         {
 #if UNITY_EDITOR
