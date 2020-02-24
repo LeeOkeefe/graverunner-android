@@ -4,6 +4,7 @@ using Score;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 internal sealed class GameManager : MonoBehaviour
 {
@@ -33,6 +34,16 @@ internal sealed class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("GAME OVER.");
+        PlayerPrefs.SetInt("CurrentScore", ScoreManager.Coins);
+        var currentScore = PlayerPrefs.GetInt("CurrentScore");
+        var bestScore = PlayerPrefs.GetInt("BestScore", 0);
+
+        if (currentScore > bestScore)
+        {
+            PlayerPrefs.SetInt("BestScore", currentScore);
+            PlayerPrefs.Save();
+        }
+
+        SceneManager.LoadScene("GameOver");
     }
 }

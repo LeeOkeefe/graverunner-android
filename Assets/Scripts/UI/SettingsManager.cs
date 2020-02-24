@@ -8,29 +8,28 @@ namespace UI
     {
         [SerializeField] private CanvasGroup m_CanvasGroup;
 
-        public void OpenSettings()
+        public void ToggleSettings()
         {
-            m_CanvasGroup.ToggleGroup(true);
-        }
-
-        public void CloseSettings()
-        {
-            m_CanvasGroup.ToggleGroup(false);
+            TogglePause();
+            var condition = m_CanvasGroup.interactable == false;
+            m_CanvasGroup.ToggleGroup(condition);
         }
 
         public void RestartGame()
         {
             SceneManager.LoadScene("Game");
+            TogglePause();
         }
 
-        public void ReturnToMenu()
+        public void ExitGame()
         {
             SceneManager.LoadScene("Menu");
+            TogglePause();
         }
 
-        public void QuitGame()
+        private void TogglePause()
         {
-            Application.Quit();
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
         }
     }
 }

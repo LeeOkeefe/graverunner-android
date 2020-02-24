@@ -11,10 +11,11 @@ namespace Objects.Obstacles
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (!col.transform.CompareTag("Player"))
-                return; 
-            
+                return;
+
             //TODO: Come back to Camera shake :D
-            //StartCoroutine(Camera.main.Shake(0.5f, 0.5f));
+            Camera.main.Shake();
+
             Instantiate(m_Particles, transform.position, Quaternion.identity);
             col.GetComponent<HealthObject>().Damage();
             Destroy(gameObject);
