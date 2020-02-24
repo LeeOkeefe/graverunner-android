@@ -9,6 +9,7 @@ namespace GridGeneration
         {
             // new random
             // pick a couple of random spots between 0 and height, and 0 and width
+            return null;
         }
     }
 }

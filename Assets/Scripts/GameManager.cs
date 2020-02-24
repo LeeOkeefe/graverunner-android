@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GridGeneration;
 using Player;
 using Score;
 using TMPro;
@@ -29,9 +28,6 @@ internal sealed class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
 
-        var gravegridgenerator = new GraveGridGenerator(8, 4);
-
-        Grid = gravegridgenerator.GeneratePath();
         ScoreManager = new ScoreManager();
     }
 
