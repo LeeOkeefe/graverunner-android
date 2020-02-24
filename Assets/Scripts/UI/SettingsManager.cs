@@ -1,4 +1,5 @@
 ﻿using Extensions;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,19 +9,17 @@ namespace UI
     {
         [SerializeField] private CanvasGroup m_CanvasGroup;
 
-        public void OpenSettings()
+        public void ToggleSettings()
         {
-            m_CanvasGroup.ToggleGroup(true);
-        }
-
-        public void CloseSettings()
-        {
-            m_CanvasGroup.ToggleGroup(false);
+            TogglePause();
+            var condition = m_CanvasGroup.interactable == false;
+            m_CanvasGroup.ToggleGroup(condition);
         }
 
         public void RestartGame()
         {
             SceneManager.LoadScene("Game");
+            TogglePause();
         }
 
         public void ReturnToMenu()
@@ -30,7 +29,16 @@ namespace UI
 
         public void QuitGame()
         {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
             Application.Quit();
+#endif
+        }
+
+        private void TogglePause()
+        {
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
         }
     }
 }

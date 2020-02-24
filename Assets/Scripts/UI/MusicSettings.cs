@@ -1,43 +1,46 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace UI
 {
     internal sealed class MusicSettings : MonoBehaviour
     {
-        [SerializeField] private AudioSource audioSource;
         [SerializeField] private Slider m_Slider;
+        [SerializeField] private AudioMixer m_Mixer;
 
         private void Start()
         {
-            m_Slider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5F);
+            var midVolume = (m_Slider.maxValue + m_Slider.minValue) / 2;
+            m_Slider.value = PlayerPrefs.GetFloat("MusicVolume", midVolume);
+            m_Mixer.SetFloat("MusicVolume", m_Slider.value);
             m_Slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         }
 
         /// <summary>
-        /// Set our audioSource volume to the value of the slider
+        /// Set the music volume to the slider value
         /// </summary>
         public void ValueChangeCheck()
         {
-            audioSource.volume = m_Slider.value;
-            PlayerPrefs.SetFloat("MusicVolume", audioSource.volume);
+            m_Mixer.SetFloat("MusicVolume", m_Slider.value);
+            PlayerPrefs.SetFloat("MusicVolume", m_Slider.value);
             PlayerPrefs.Save();
         }
 
         public void IncreaseVolume()
         {
-            if (m_Slider.value >= 1)
+            if (m_Slider.value >= m_Slider.maxValue)
                 return;
 
-            m_Slider.value += 0.1F;
+            m_Slider.value += 10F;
         }
 
         public void DecreaseVolume()
         {
-            if (m_Slider.value <= 0)
+            if (m_Slider.value <= m_Slider.minValue)
                 return;
 
-            m_Slider.value -= 0.1F;
+            m_Slider.value -= 10F;
         }
     }
 }
