@@ -10,8 +10,7 @@ namespace Objects
         private GraveGridGenerator m_GraveGenerator;
         private GhostGridGenerator m_GhostGenerator;
 
-        private int m_Rows = 6;
-        private int m_Columns = 4;
+        private int m_GameWidth = 4;
 
         [SerializeField] private Transform m_Player;
         [SerializeField] private GameObject m_Floor;
@@ -19,9 +18,9 @@ namespace Objects
         [SerializeField] private GameObject m_Coin;
         [SerializeField] private GameObject m_Ghost;
 
-        private float m_Threshold = -5;
-        private float m_NextSpawnY = 10;
-        private int m_ChunkSize = 10;
+        private float m_Threshold = 5;
+        private float m_NextSpawnY = 30;
+        private int m_ChunkSize = 30;
 
         private void Awake()
         {
@@ -40,11 +39,13 @@ namespace Objects
 
         private void GenerateChunk()
         {
+            var currentOffset = -13;
+
             var chunk = Instantiate(m_Floor, new Vector3(1.5f, m_NextSpawnY, 0), Quaternion.identity);
 
-            var numberOfRows = GenerateGraveGrid(chunk.transform, -2);
+            //currentOffset += GenerateGraveGrid(chunk.transform, currentOffset);
 
-            GenerateGhostGrid(chunk.transform, -2 + m_Rows);
+            //GenerateGhostGrid(chunk.transform, currentOffset);
 
             m_NextSpawnY += m_ChunkSize;
         }
@@ -55,12 +56,12 @@ namespace Objects
             var random = new Random();
             var numberOfRows = random.Next(4, 10);
 
-            var openPath = m_GraveGenerator.GeneratePath(m_Rows, m_Columns);
+            var openPath = m_GraveGenerator.GeneratePath(numberOfRows, 4);
             //var openPath = m_GraveGenerator.GeneratePath(numberOfRows ,m_Columns);
 
-            for (var x = 0; x < m_Columns; x++)
+            for (var x = 0; x < m_GameWidth; x++)
             {
-                for (var y = 0; y < m_Rows; y++)
+                for (var y = 0; y < numberOfRows; y++)
                 {
                     var prefab = openPath.Any(v => v.x == x && v.y == y)
                         ? m_Coin
@@ -75,21 +76,23 @@ namespace Objects
             return numberOfRows;
         }
 
-        private void GenerateGhostGrid(Transform chunk, int heightOffset)
+        private int GenerateGhostGrid(Transform chunk, int heightOffset)
         {
-            //var availableRows = m_ChunkSize - rows;
-
             // call ghost generator, get coordinates for ghosts
-            var rows = m_ChunkSize - m_Rows;
-            var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_Columns, 3);
+            var rows = 4;
+            var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, 3);
             Debug.Log(locations.Count);
             // instantiate ghosts at locations + offsets specified by ghost generator
 
             for (var i = 0; i < locations.Count; i++)
             {
-                var go = Instantiate(m_Ghost, new Vector2(locations[i].x, locations[i].y + heightOffset), Quaternion.identity, chunk);
+                print(locations[i]);
+
+                var go = Instantiate(m_Ghost, Vector3.zero, Quaternion.identity, chunk);
                 go.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
             }
+
+            return rows;
         }
     }
 }
