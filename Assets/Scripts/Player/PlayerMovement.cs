@@ -1,5 +1,5 @@
-﻿using Score;
-using UnityEngine;
+﻿using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {
@@ -13,6 +13,8 @@ namespace Player
         private Vector3 m_TargetPos;
         [SerializeField] private float m_MovementSpeed = 6;
         [SerializeField] private float m_MoveSpeed = 1;
+
+        private bool m_ReversedControls;
 
         private void Start()
         {
@@ -31,6 +33,40 @@ namespace Player
             {
                 transform.position = Vector3.MoveTowards(transform.position, m_TargetPos, m_MovementSpeed * Time.deltaTime);
             }
+        }
+
+        public void ModifySpeed(float speed)
+        {
+            m_MovementSpeed += speed;
+        }
+
+        /// <summary>
+        /// Change target position based on direction of swipe
+        /// </summary>
+        public void HandleSwipeGesture(Vector3 direction)
+        {
+            if (m_ReversedControls)
+            {
+                direction *= -1;
+            }
+
+            var targetPos = m_TargetPos + direction;
+
+            if (targetPos.x > m_MaxHorizontalMovement || targetPos.x < m_MinHorizontalMovement)
+                return;
+
+            if (targetPos.y < m_FurthestDistance - m_MinimumOffsetY)
+            {
+                GameManager.Instance.MinRestrictionLine.Play();
+                return;
+            }
+
+            m_TargetPos = targetPos;
+        }
+
+        public void ReverseInput(bool reversed)
+        {
+            m_ReversedControls = reversed;
         }
 
         /// <summary>
@@ -64,25 +100,6 @@ namespace Player
 
                 m_FurthestDistance = myPosY;
             }
-        }
-
-        /// <summary>
-        /// Change target position based on direction of swipe
-        /// </summary>
-        public void HandleSwipeGesture(Vector3 direction)
-        {
-            var targetPos = m_TargetPos + direction;
-
-            if (targetPos.x > m_MaxHorizontalMovement || targetPos.x < m_MinHorizontalMovement)
-                return;
-            
-            if (targetPos.y < m_FurthestDistance - m_MinimumOffsetY)
-            {
-                GameManager.Instance.MinRestrictionLine.Play();
-                return;
-            }
-
-            m_TargetPos = targetPos;
         }
     }
 }

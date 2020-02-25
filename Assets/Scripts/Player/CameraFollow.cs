@@ -6,7 +6,7 @@ namespace Player
     {
         [SerializeField] private Transform m_Player;
         [SerializeField] private float m_MovementSpeed = 5f;
-        [SerializeField] private float m_OffsetY = 2;
+        [SerializeField] private float m_OffsetY = 3;
 
         private void Update()
         {

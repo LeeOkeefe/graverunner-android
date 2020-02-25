@@ -43,9 +43,9 @@ namespace Objects
 
             var chunk = Instantiate(m_Floor, new Vector3(1.5f, m_NextSpawnY, 0), Quaternion.identity);
 
-            //currentOffset += GenerateGraveGrid(chunk.transform, currentOffset);
+            currentOffset += GenerateGraveGrid(chunk.transform, currentOffset);
 
-            //GenerateGhostGrid(chunk.transform, currentOffset);
+            GenerateGhostGrid(chunk.transform, currentOffset);
 
             m_NextSpawnY += m_ChunkSize;
         }

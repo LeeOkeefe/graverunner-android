@@ -15,7 +15,13 @@ namespace Objects
         private void Update()
         {
             var pos = m_MainCamera.WorldToViewportPoint(m_Top);
-            if (pos.y < -0.2f)
+
+            if (m_MainCamera.transform.rotation.eulerAngles.z < 179f && pos.y < -0.2f)
+            {
+                Destroy(gameObject);
+            }
+
+            else if (m_MainCamera.transform.rotation.eulerAngles.z > 179f && pos.y > 1.2f)
             {
                 Destroy(gameObject);
             }

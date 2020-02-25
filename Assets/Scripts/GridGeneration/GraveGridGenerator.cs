@@ -48,7 +48,7 @@ namespace GridGeneration
             return openPoints;
         }
 
-        private List<GridDirection> GetValidDirections(int x, int width, GridDirection lastDirection)
+        private static List<GridDirection> GetValidDirections(int x, int width, GridDirection lastDirection)
         {
             var validDirections = new List<GridDirection>
             {
