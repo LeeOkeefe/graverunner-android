@@ -7,6 +7,13 @@ namespace GridGeneration
 {
     internal sealed class GhostGridGenerator
     {
+        private Random m_Random;
+
+        public GhostGridGenerator()
+        {
+            m_Random = new Random();
+        }
+
         public List<Vector2> GenerateGhostLocations(int height, int width, int ghostCount)
         {
             var locations = new List<Vector2>();
@@ -33,10 +40,8 @@ namespace GridGeneration
 
         private Vector2 GetRandomLocation(int height, int width)
         {
-            var random = new Random();
-
-            var x = random.Next(width);
-            var y = random.Next(height);
+            var x = m_Random.Next(width);
+            var y = m_Random.Next(height);
 
             return new Vector2(x, y);
         }

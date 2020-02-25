@@ -34,7 +34,7 @@ internal sealed class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        PlayerPrefs.SetInt("CurrentScore", ScoreManager.Coins);
+        PlayerPrefs.SetInt("CurrentScore", ScoreManager.Score);
         var currentScore = PlayerPrefs.GetInt("CurrentScore");
         var bestScore = PlayerPrefs.GetInt("BestScore", 0);
 

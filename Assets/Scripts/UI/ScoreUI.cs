@@ -10,12 +10,12 @@ namespace UI
         private void Start()
         {
             m_Text = GetComponent<TextMeshProUGUI>();
-            m_Text.text = $"{GameManager.Instance.ScoreManager.Coins}";
+            m_Text.text = $"{GameManager.Instance.ScoreManager.Score}";
         }
 
         public void UpdateScoreText()
         {
-            m_Text.text = $"{GameManager.Instance.ScoreManager.Coins}";
+            m_Text.text = $"{GameManager.Instance.ScoreManager.Score}";
         }
     }
 }
