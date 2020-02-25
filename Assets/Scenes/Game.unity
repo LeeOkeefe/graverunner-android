@@ -4229,6 +4229,7 @@ MonoBehaviour:
   m_Gravestone: {fileID: 4860822168999005729, guid: cf6633a85a4b2784abf4bf67c869d186,
     type: 3}
   m_Coin: {fileID: 8785602719558548692, guid: 50231cbe44c13244e8e0127befbd8322, type: 3}
+  m_Ghost: {fileID: 8927323426789631204, guid: 7b3c9c1771244d146964434bd2b8ce7d, type: 3}
 --- !u!1 &1678935354
 GameObject:
   m_ObjectHideFlags: 0
