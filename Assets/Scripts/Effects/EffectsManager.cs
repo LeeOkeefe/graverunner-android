@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +34,7 @@ namespace Effects
             {
                 () => FlipCamera(2),
                 () => ReverseControls(3),
-                () => SpeedBoost(3, 5)
+                () => SpeedBoost(1.5f, 5)
             };
         }
 
@@ -85,12 +84,12 @@ namespace Effects
         public void SpeedBoost(float duration, float speed)
         {
             var playerMovement = GameManager.Instance.PlayerMovement;
-            playerMovement.ModifySpeed(speed);
+            playerMovement.ModifyMoveSpeed(speed);
             m_EffectsUI.UpdateSlot(m_SpeedBoostIcon, true);
 
             var effect = new Effect(duration, () =>
             {
-                playerMovement.ModifySpeed(-speed);
+                playerMovement.ModifyMoveSpeed(-speed);
                 m_EffectsUI.UpdateSlot(m_SpeedBoostIcon, false);
             });
 

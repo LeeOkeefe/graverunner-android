@@ -8,16 +8,16 @@ namespace Objects.Obstacles
     {
         [SerializeField] private GameObject m_Particles;
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!col.transform.CompareTag("Player"))
+            if (!other.CompareTag("Player"))
                 return;
 
-            //TODO: Come back to Camera shake :D
             Camera.main.Shake();
 
             Instantiate(m_Particles, transform.position, Quaternion.identity);
-            col.GetComponent<HealthObject>().Damage();
+            other.GetComponent<HealthObject>().Damage();
+            other.GetComponent<PlayerMovement>().Rebound();
             Destroy(gameObject);
         }
     }

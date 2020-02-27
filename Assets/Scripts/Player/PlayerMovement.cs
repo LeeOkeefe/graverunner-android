@@ -35,9 +35,20 @@ namespace Player
             }
         }
 
-        public void ModifySpeed(float speed)
+        /// <summary>
+        /// Modifies the constant move speed on the Y-axis
+        /// </summary>
+        public void ModifyMoveSpeed(float speed)
         {
-            m_MovementSpeed += speed;
+            m_MoveSpeed += speed;
+        }
+
+        /// <summary>
+        /// Rebounds the player a unit space
+        /// </summary>
+        public void Rebound()
+        {
+            m_TargetPos += Vector3.down;
         }
 
         /// <summary>
