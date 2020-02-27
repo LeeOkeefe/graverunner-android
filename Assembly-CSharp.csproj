@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Effects\Effect.cs" />
     <Compile Include="Assets\Scripts\Effects\EffectsManager.cs" />
+    <Compile Include="Assets\Scripts\Effects\TriggerEffect.cs" />
     <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\CanvasGroupExtensions.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Assets\Scripts\Player\InputManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\UI\EffectsUI.cs" />
     <Compile Include="Assets\Scripts\UI\GameOverManager.cs" />
     <Compile Include="Assets\Scripts\UI\LivesUI.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />

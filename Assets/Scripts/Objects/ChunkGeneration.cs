@@ -52,12 +52,10 @@ namespace Objects
 
         private int GenerateGraveGrid(Transform chunk, int heightOffset)
         {
-            // var random = new Random(4, 11);
             var random = new Random();
             var numberOfRows = random.Next(4, 10);
 
             var openPath = m_GraveGenerator.GeneratePath(numberOfRows, 4);
-            //var openPath = m_GraveGenerator.GeneratePath(numberOfRows ,m_Columns);
 
             for (var x = 0; x < m_GameWidth; x++)
             {
@@ -78,16 +76,11 @@ namespace Objects
 
         private int GenerateGhostGrid(Transform chunk, int heightOffset)
         {
-            // call ghost generator, get coordinates for ghosts
             var rows = 4;
             var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, 3);
-            Debug.Log(locations.Count);
-            // instantiate ghosts at locations + offsets specified by ghost generator
 
             for (var i = 0; i < locations.Count; i++)
             {
-                print(locations[i]);
-
                 var go = Instantiate(m_Ghost, Vector3.zero, Quaternion.identity, chunk);
                 go.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
             }

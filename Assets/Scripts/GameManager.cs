@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Effects;
 using Player;
 using Score;
 using TMPro;
@@ -15,6 +16,7 @@ internal sealed class GameManager : MonoBehaviour
     public LivesUI LivesUI;
     public HealthObject HealthObject;
     public Animation MinRestrictionLine;
+    public EffectsManager EffectsManager;
 
     public List<Vector2> Grid;
     public ScoreManager ScoreManager;
