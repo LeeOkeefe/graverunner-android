@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 using Random = System.Random;
 
@@ -14,21 +13,20 @@ namespace GridGeneration
             m_Random = new Random();
         }
 
-        public List<Vector2> GenerateGhostLocations(int height, int width, int ghostCount)
+        /// <summary>
+        /// Generate unique locations within a grid
+        /// </summary>
+        public List<Vector2> GenerateGhostLocations(int height, int width, int ghostCount, int gemCount)
         {
             var locations = new List<Vector2>();
 
-            // new random
-
-            // pick a couple of random spots between 0 and height, and 0 and width
-            for (var i = 0; i < ghostCount; i++)
+            for (var i = 0; i < ghostCount + gemCount; i++)
             {
                 var location = GetRandomLocation(height, width);
 
                 while (locations.Contains(location))
                 {
                     location = GetRandomLocation(height, width);
-                    break;
                 }
 
                 locations.Add(location);
@@ -37,7 +35,9 @@ namespace GridGeneration
             return locations;
         }
 
-
+        /// <summary>
+        /// Returns a random location within a specified grid space
+        /// </summary>
         private Vector2 GetRandomLocation(int height, int width)
         {
             var x = m_Random.Next(width);

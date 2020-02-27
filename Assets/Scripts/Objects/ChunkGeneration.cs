@@ -17,15 +17,23 @@ namespace Objects
         [SerializeField] private GameObject m_Gravestone;
         [SerializeField] private GameObject m_Coin;
         [SerializeField] private GameObject m_Ghost;
+        [SerializeField] private GameObject m_Gem;
 
         private float m_Threshold = 5;
         private float m_NextSpawnY = 30;
         private int m_ChunkSize = 30;
 
+        private Random m_Random;
+
         private void Awake()
         {
             m_GraveGenerator = new GraveGridGenerator();
             m_GhostGenerator = new GhostGridGenerator();
+        }
+
+        private void Start()
+        {
+            m_Random = new Random();
         }
 
         private void Update()
@@ -37,6 +45,9 @@ namespace Objects
             }
         }
 
+        /// <summary>
+        /// Generates the next chunk containing grids
+        /// </summary>
         private void GenerateChunk()
         {
             var currentOffset = -13;
@@ -50,10 +61,12 @@ namespace Objects
             m_NextSpawnY += m_ChunkSize;
         }
 
+        /// <summary>
+        /// Generate a grid of gravestones with a path of coins
+        /// </summary>
         private int GenerateGraveGrid(Transform chunk, int heightOffset)
         {
-            var random = new Random();
-            var numberOfRows = random.Next(4, 10);
+            var numberOfRows = m_Random.Next(4, 10);
 
             var openPath = m_GraveGenerator.GeneratePath(numberOfRows, 4);
 
@@ -74,18 +87,56 @@ namespace Objects
             return numberOfRows;
         }
 
-        private int GenerateGhostGrid(Transform chunk, int heightOffset)
+        /// <summary>
+        /// Generate a grid of ghosts, with a chance for gems in the same grid
+        /// </summary>
+        private void GenerateGhostGrid(Transform chunk, int heightOffset)
         {
             var rows = 4;
-            var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, 3);
+            var ghostCount = m_Random.Next(0, 4);
+            var gemCount = GenerateChanceOfGems();
+            var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, ghostCount, gemCount);
+
+            Debug.Log($"Ghost Count: {ghostCount}  Gem Count: {gemCount}");
 
             for (var i = 0; i < locations.Count; i++)
             {
+                if (gemCount > 0)
+                {
+                    var gem = Instantiate(m_Gem, Vector3.zero, Quaternion.identity, chunk);
+                    gem.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
+                    gemCount--;
+                    continue;
+                }
+
                 var go = Instantiate(m_Ghost, Vector3.zero, Quaternion.identity, chunk);
                 go.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
             }
+        }
 
-            return rows;
+        /// <summary>
+        /// Generate a number between 0 and 3 based on percentages
+        /// </summary>
+        private int GenerateChanceOfGems()
+        {
+            var value = m_Random.Next(0, 100);
+
+            if (value <= 3)
+            {
+                return 3;
+            }
+
+            if (value <= 10)
+            {
+                return 2;
+            }
+
+            if (value <= 20)
+            {
+                return 1;
+            }
+
+            return 0;
         }
     }
 }

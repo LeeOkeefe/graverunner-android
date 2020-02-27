@@ -34,6 +34,11 @@ internal sealed class GameManager : MonoBehaviour
         ScoreManager = new ScoreManager();
     }
 
+    private void Start()
+    {
+        Screen.orientation = ScreenOrientation.Portrait;
+    }
+
     public void GameOver()
     {
         PlayerPrefs.SetInt("CurrentScore", ScoreManager.Score);
