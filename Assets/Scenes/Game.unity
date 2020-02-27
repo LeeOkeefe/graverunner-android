@@ -726,7 +726,7 @@ PrefabInstance:
     - target: {fileID: 8302251591342886983, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8302251591342887003, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
@@ -2074,7 +2074,7 @@ PrefabInstance:
     - target: {fileID: 8302251591342886983, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8302251591342887003, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
@@ -2432,7 +2432,7 @@ PrefabInstance:
     - target: {fileID: 8302251591342886983, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8302251591342887003, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
@@ -3211,7 +3211,7 @@ PrefabInstance:
     - target: {fileID: 8302251591342886983, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8302251591342887003, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
@@ -3340,6 +3340,7 @@ MonoBehaviour:
     type: 3}
   m_Coin: {fileID: 8785602719558548692, guid: 50231cbe44c13244e8e0127befbd8322, type: 3}
   m_Ghost: {fileID: 8927323426789631204, guid: 7b3c9c1771244d146964434bd2b8ce7d, type: 3}
+  m_Gem: {fileID: 8302251591342886983, guid: c0848cc910f09264cb6db7aa64d1521c, type: 3}
 --- !u!114 &1668480889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4914,7 +4915,7 @@ PrefabInstance:
     - target: {fileID: 8302251591342886983, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8302251591342887003, guid: c0848cc910f09264cb6db7aa64d1521c,
         type: 3}
