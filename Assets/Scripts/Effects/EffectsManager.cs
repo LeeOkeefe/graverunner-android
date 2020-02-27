@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UI;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = System.Random;
 
 namespace Effects
 {
     internal sealed class EffectsManager : MonoBehaviour
     {
         private Camera m_Camera;
-        private List<Effect> m_Effects;
+        private List<Action> m_Effects;
+        private List<Effect> m_ActiveEffects;
+
+        [SerializeField] private Image m_FlipCameraIcon;
+        [SerializeField] private Image m_SpeedBoostIcon;
+        [SerializeField] private Image m_ReversedControlsIcon;
+        [SerializeField] private EffectsUI m_EffectsUI;
+
+        private Random m_Random;
 
         private void Awake()
         {
@@ -17,13 +28,21 @@ namespace Effects
 
         private void Start()
         {
-            m_Effects = new List<Effect>();
+            m_Random = new Random();
+            m_ActiveEffects = new List<Effect>();
+
+            m_Effects = new List<Action>
+            {
+                () => FlipCamera(2),
+                () => ReverseControls(3),
+                () => SpeedBoost(3, 5)
+            };
         }
 
         private void Update()
         {
             var remainingEffects = new List<Effect>();
-            foreach (var effect in m_Effects)
+            foreach (var effect in m_ActiveEffects)
             {
                 if (Time.time >= effect.ExpiryTime)
                 {
@@ -34,54 +53,66 @@ namespace Effects
                 remainingEffects.Add(effect);
             }
 
-            m_Effects = remainingEffects;
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                ReverseControls(5);
-            }
-
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                FlipCamera(1);
-            }
+            m_ActiveEffects = remainingEffects;
         }
 
+        public Action GetRandomEffect()
+        {
+            var randomValue = m_Random.Next(m_Effects.Count);
+            return m_Effects[randomValue];
+        }
+
+        /// <summary>
+        /// Flips the camera upside down for the duration
+        /// </summary>
         public void FlipCamera(float duration)
         {
+            m_Camera.transform.eulerAngles = new Vector3(0, 0, 180);
+            m_EffectsUI.UpdateSlot(m_FlipCameraIcon, true);
+
             var effect = new Effect(duration, () =>
             {
                 m_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
+                m_EffectsUI.UpdateSlot(m_FlipCameraIcon, false);
             });
 
-            m_Camera.transform.eulerAngles = new Vector3(0, 0, 180);
-            m_Effects.Add(effect);
+            m_ActiveEffects.Add(effect);
         }
 
+        /// <summary>
+        /// Increases the player movement speed for the duration
+        /// </summary>
         public void SpeedBoost(float duration, float speed)
         {
             var playerMovement = GameManager.Instance.PlayerMovement;
             playerMovement.ModifySpeed(speed);
+            m_EffectsUI.UpdateSlot(m_SpeedBoostIcon, true);
 
             var effect = new Effect(duration, () =>
             {
                 playerMovement.ModifySpeed(-speed);
+                m_EffectsUI.UpdateSlot(m_SpeedBoostIcon, false);
             });
-            
-            m_Effects.Add(effect);
+
+            m_ActiveEffects.Add(effect);
         }
 
+        /// <summary>
+        /// Reverses the input controls for the duration
+        /// </summary>
         public void ReverseControls(float duration)
         {
             var playerMovement = GameManager.Instance.PlayerMovement;
             playerMovement.ReverseInput(true);
+            m_EffectsUI.UpdateSlot(m_ReversedControlsIcon, true);
 
             var effect = new Effect(duration, () =>
-            { 
+            {
                 playerMovement.ReverseInput(false);
+                m_EffectsUI.UpdateSlot(m_ReversedControlsIcon, false);
             });
 
-            m_Effects.Add(effect);
+            m_ActiveEffects.Add(effect);
         }
     }
 }

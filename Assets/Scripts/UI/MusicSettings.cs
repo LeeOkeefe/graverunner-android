@@ -6,41 +6,41 @@ namespace UI
 {
     internal sealed class MusicSettings : MonoBehaviour
     {
-        [SerializeField] private Slider m_Slider;
+        [SerializeField] private Toggle m_Toggle;
         [SerializeField] private AudioMixer m_Mixer;
 
         private void Start()
         {
-            var midVolume = (m_Slider.maxValue + m_Slider.minValue) / 2;
-            m_Slider.value = PlayerPrefs.GetFloat("MusicVolume", midVolume);
-            m_Mixer.SetFloat("MusicVolume", m_Slider.value);
-            m_Slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+            var musicOn = PlayerPrefs.GetInt("MusicOn", 1);
+            m_Toggle.isOn = musicOn == 1;
+            SetMusicVolume();
+
+            m_Toggle.onValueChanged.AddListener(delegate
+            {
+                ValueChangeCheck();
+            });
         }
 
         /// <summary>
-        /// Set the music volume to the slider value
+        /// Toggle the music volume on or off 
         /// </summary>
         public void ValueChangeCheck()
         {
-            m_Mixer.SetFloat("MusicVolume", m_Slider.value);
-            PlayerPrefs.SetFloat("MusicVolume", m_Slider.value);
+            PlayerPrefs.SetInt("MusicOn", m_Toggle.isOn ? 1 : 0);
+            SetMusicVolume();
             PlayerPrefs.Save();
         }
 
-        public void IncreaseVolume()
+        private void SetMusicVolume()
         {
-            if (m_Slider.value >= m_Slider.maxValue)
-                return;
-
-            m_Slider.value += 10F;
-        }
-
-        public void DecreaseVolume()
-        {
-            if (m_Slider.value <= m_Slider.minValue)
-                return;
-
-            m_Slider.value -= 10F;
+            if (m_Toggle.isOn)
+            {
+                m_Mixer.SetFloat("MusicVolume", 0);
+            }
+            else
+            {
+                m_Mixer.SetFloat("MusicVolume", -80);
+            }
         }
     }
 }
