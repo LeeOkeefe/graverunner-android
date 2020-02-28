@@ -46,9 +46,12 @@ namespace Player
         /// <summary>
         /// Rebounds the player a unit space
         /// </summary>
-        public void Rebound()
+        public void Rebound(Vector3 direction)
         {
-            m_TargetPos += Vector3.down;
+            if (m_TargetPos.x <= m_MinHorizontalMovement || m_TargetPos.x >= m_MaxHorizontalMovement)
+                return;
+
+            m_TargetPos += direction;
         }
 
         /// <summary>

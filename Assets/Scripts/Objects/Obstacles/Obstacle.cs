@@ -13,11 +13,14 @@ namespace Objects.Obstacles
             if (!other.CompareTag("Player"))
                 return;
 
+            var pos = transform.position;
             Camera.main.Shake();
 
-            Instantiate(m_Particles, transform.position, Quaternion.identity);
+            Instantiate(m_Particles, pos, Quaternion.identity);
             other.GetComponent<HealthObject>().Damage();
-            other.GetComponent<PlayerMovement>().Rebound();
+
+            var colliderDirection = other.GetColliderDirection(pos);
+            other.GetComponent<PlayerMovement>().Rebound(colliderDirection);
             Destroy(gameObject);
         }
     }

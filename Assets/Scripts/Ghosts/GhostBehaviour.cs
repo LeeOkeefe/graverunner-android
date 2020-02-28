@@ -1,4 +1,5 @@
 ﻿using System;
+using Extensions;
 using Player;
 using UnityEngine;
 
@@ -45,13 +46,26 @@ namespace Ghosts
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        /*private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player"))
                 return;
 
             other.GetComponent<HealthObject>().Damage();
-            other.GetComponent<PlayerMovement>().Rebound();
+
+            var colliderDirection = other.GetColliderDirection(transform.position);
+            other.GetComponent<PlayerMovement>().Rebound(colliderDirection);
+        }*/
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (!other.transform.CompareTag("Player"))
+                return;
+
+            other.transform.GetComponent<HealthObject>().Damage();
+
+            var colliderDirection = other.GetCollisionDirection(transform.position);
+            other.transform.GetComponent<PlayerMovement>().Rebound(colliderDirection);
         }
     }
 }
