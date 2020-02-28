@@ -68,7 +68,9 @@
     <Compile Include="Assets\Scripts\Effects\TriggerEffect.cs" />
     <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\CanvasGroupExtensions.cs" />
+    <Compile Include="Assets\Scripts\Extensions\ColliderExtensions.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Ghosts\GhostBehaviour.cs" />
     <Compile Include="Assets\Scripts\GridGeneration\GhostGridGenerator.cs" />
     <Compile Include="Assets\Scripts\GridGeneration\GraveGridGenerator.cs" />
     <Compile Include="Assets\Scripts\GridGeneration\GridDirection.cs" />

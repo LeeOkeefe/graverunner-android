@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GridGeneration;
 using UnityEngine;
 using Random = System.Random;
@@ -24,6 +25,10 @@ namespace Objects
         private int m_ChunkSize = 30;
 
         private Random m_Random;
+
+        private int m_MinGhosts = 0;
+        private int m_MaxGhosts = 5;
+        private int m_MaxGhostRows = 8;
 
         private void Awake()
         {
@@ -54,9 +59,18 @@ namespace Objects
 
             var chunk = Instantiate(m_Floor, new Vector3(1.5f, m_NextSpawnY, 0), Quaternion.identity);
 
-            currentOffset += GenerateGraveGrid(chunk.transform, currentOffset);
+            currentOffset += GenerateGraveGrid(chunk.transform, currentOffset, 10);
 
-            GenerateGhostGrid(chunk.transform, currentOffset);
+            currentOffset += GenerateGhostGrid(chunk.transform, currentOffset);
+
+            var remainingRows = m_ChunkSize - (currentOffset - -13);
+
+            GenerateGraveGrid(chunk.transform, currentOffset, remainingRows);
+
+            if (remainingRows < 0)
+            {
+                throw new Exception($"Max rows in chunk is {m_ChunkSize} but contained {currentOffset - -13} rows");
+            }
 
             m_NextSpawnY += m_ChunkSize;
         }
@@ -64,9 +78,9 @@ namespace Objects
         /// <summary>
         /// Generate a grid of gravestones with a path of coins
         /// </summary>
-        private int GenerateGraveGrid(Transform chunk, int heightOffset)
+        private int GenerateGraveGrid(Transform chunk, int heightOffset, int maxRows)
         {
-            var numberOfRows = m_Random.Next(4, 10);
+            var numberOfRows = m_Random.Next(2, maxRows);
 
             var openPath = m_GraveGenerator.GeneratePath(numberOfRows, 4);
 
@@ -90,10 +104,10 @@ namespace Objects
         /// <summary>
         /// Generate a grid of ghosts, with a chance for gems in the same grid
         /// </summary>
-        private void GenerateGhostGrid(Transform chunk, int heightOffset)
+        private int GenerateGhostGrid(Transform chunk, int heightOffset)
         {
-            var rows = 4;
-            var ghostCount = m_Random.Next(0, 4);
+            var ghostCount = m_Random.Next(m_MinGhosts, m_MaxGhosts);
+            var rows = m_Random.Next(2, m_MaxGhostRows);
             var gemCount = GenerateChanceOfGems();
             var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, ghostCount, gemCount);
 
@@ -112,6 +126,8 @@ namespace Objects
                 var go = Instantiate(m_Ghost, Vector3.zero, Quaternion.identity, chunk);
                 go.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
             }
+
+            return rows;
         }
 
         /// <summary>

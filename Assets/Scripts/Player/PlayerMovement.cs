@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {
@@ -15,6 +14,8 @@ namespace Player
         [SerializeField] private float m_MoveSpeed = 1;
 
         private bool m_ReversedControls;
+
+        private float m_NextBonusRow = 47;
 
         private void Start()
         {
@@ -35,9 +36,27 @@ namespace Player
             }
         }
 
-        public void ModifySpeed(float speed)
+        /// <summary>
+        /// Modifies the constant move speed on the Y-axis
+        /// </summary>
+        public void ModifyMoveSpeed(float speed)
         {
-            m_MovementSpeed += speed;
+            m_MoveSpeed += speed;
+        }
+
+        /// <summary>
+        /// Rebounds the player in the direction, unless the player is at min or max X-axis
+        /// to prevent the player being pushed outside of the boundaries
+        /// </summary>
+        public void Rebound(Vector3 direction)
+        {
+            if (m_TargetPos.x <= m_MinHorizontalMovement || m_TargetPos.x >= m_MaxHorizontalMovement)
+            {
+                m_TargetPos += Vector3.down;
+                return;
+            }
+
+            m_TargetPos += direction;
         }
 
         /// <summary>
@@ -64,6 +83,9 @@ namespace Player
             m_TargetPos = targetPos;
         }
 
+        /// <summary>
+        /// Reverses the input controls
+        /// </summary>
         public void ReverseInput(bool reversed)
         {
             m_ReversedControls = reversed;
@@ -98,8 +120,25 @@ namespace Player
                     GameManager.Instance.ScoreManager.IncreaseScore(1);
                 }
 
+                CalculateBonusRow(currentY);
+
                 m_FurthestDistance = myPosY;
             }
+        }
+
+        /// <summary>
+        /// Increase score each time the bonus row is passed,
+        /// bonus points are incremented each bonus row
+        /// </summary>
+        private void CalculateBonusRow(float currentY)
+        {
+            if (currentY < m_NextBonusRow)
+                return;
+
+            var bonusScore = (int)(currentY / 5) + 1;
+
+            GameManager.Instance.ScoreManager.IncreaseScore(bonusScore);
+            m_NextBonusRow += 50;
         }
     }
 }
