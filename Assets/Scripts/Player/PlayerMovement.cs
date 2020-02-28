@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
@@ -15,6 +14,8 @@ namespace Player
         [SerializeField] private float m_MoveSpeed = 1;
 
         private bool m_ReversedControls;
+
+        private float m_NextBonusRow = 47;
 
         private void Start()
         {
@@ -119,8 +120,25 @@ namespace Player
                     GameManager.Instance.ScoreManager.IncreaseScore(1);
                 }
 
+                CalculateBonusRow(currentY);
+
                 m_FurthestDistance = myPosY;
             }
+        }
+
+        /// <summary>
+        /// Increase score each time the bonus row is passed,
+        /// bonus points are incremented each bonus row
+        /// </summary>
+        private void CalculateBonusRow(float currentY)
+        {
+            if (currentY < m_NextBonusRow)
+                return;
+
+            var bonusScore = (int)(currentY / 5) + 1;
+
+            GameManager.Instance.ScoreManager.IncreaseScore(bonusScore);
+            m_NextBonusRow += 50;
         }
     }
 }
