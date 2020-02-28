@@ -44,12 +44,16 @@ namespace Player
         }
 
         /// <summary>
-        /// Rebounds the player a unit space
+        /// Rebounds the player in the direction, unless the player is at min or max X-axis
+        /// to prevent the player being pushed outside of the boundaries
         /// </summary>
         public void Rebound(Vector3 direction)
         {
             if (m_TargetPos.x <= m_MinHorizontalMovement || m_TargetPos.x >= m_MaxHorizontalMovement)
+            {
+                m_TargetPos += new Vector3(0, -1.5f, 0);
                 return;
+            }
 
             m_TargetPos += direction;
         }
@@ -78,6 +82,9 @@ namespace Player
             m_TargetPos = targetPos;
         }
 
+        /// <summary>
+        /// Reverses the input controls
+        /// </summary>
         public void ReverseInput(bool reversed)
         {
             m_ReversedControls = reversed;

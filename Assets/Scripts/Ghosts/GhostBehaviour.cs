@@ -46,7 +46,7 @@ namespace Ghosts
             }
         }
 
-        /*private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player"))
                 return;
@@ -55,9 +55,9 @@ namespace Ghosts
 
             var colliderDirection = other.GetColliderDirection(transform.position);
             other.GetComponent<PlayerMovement>().Rebound(colliderDirection);
-        }*/
+        }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        /*private void OnCollisionEnter2D(Collision2D other)
         {
             if (!other.transform.CompareTag("Player"))
                 return;
@@ -66,6 +66,6 @@ namespace Ghosts
 
             var colliderDirection = other.GetCollisionDirection(transform.position);
             other.transform.GetComponent<PlayerMovement>().Rebound(colliderDirection);
-        }
+        }*/
     }
 }
