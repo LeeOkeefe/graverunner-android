@@ -16,7 +16,7 @@ namespace Ghosts
 
         private Collider2D m_Collider;
         private Animator m_Anim;
-        private bool m_IsAlive = true;
+        private bool m_IsMoving = true;
 
         private static readonly int Death = Animator.StringToHash("Death");
 
@@ -35,28 +35,23 @@ namespace Ghosts
 
         private void Update()
         {
-            if (!m_IsAlive)
+            if (!m_IsMoving)
                 return;
 
             transform.position = Vector3.MoveTowards(transform.position, m_TargetPos, m_MoveSpeed * Time.deltaTime);
-            GetTargetPosition();
+            ChangeTargetPosition();
         }
 
-        /// <summary>
-        /// Sets the target position to the min or max,
-        /// and flips the ghost sprite depending on the direction
-        /// </summary>
-        private void GetTargetPosition()
+        private void ChangeTargetPosition()
         {
             if (transform.position.x >= m_MaxHorizontalMovement)
             {
-                m_TargetPos = new Vector3(m_MinHorizontalMovement, m_TargetPos.y, m_TargetPos.z);
-                m_SpriteRenderer.flipX = false;
+                ChangeTargetPositionX(m_MinHorizontalMovement);
             }
+
             if (transform.position.x <= m_MinHorizontalMovement)
             {
-                m_TargetPos = new Vector3(m_MaxHorizontalMovement, m_TargetPos.y, m_TargetPos.z);
-                m_SpriteRenderer.flipX = true;
+                ChangeTargetPositionX(m_MaxHorizontalMovement);
             }
         }
 
@@ -92,12 +87,9 @@ namespace Ghosts
             m_SpriteRenderer.flipX = !(m_TargetPos.x < 2);
         }
 
-        /// <summary>
-        /// Prevent ghost functionality and set death animation
-        /// </summary>
         private void DeactivateGhostOnHit()
         {
-            m_IsAlive = false;
+            m_IsMoving = false;
             m_Anim.SetTrigger(Death);
         }
 
