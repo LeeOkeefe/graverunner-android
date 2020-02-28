@@ -832,7 +832,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &169637751
 CapsuleCollider2D:
@@ -4593,7 +4593,7 @@ PrefabInstance:
     - target: {fileID: 6264966700550787705, guid: a413c48426fe9ca45836e23090a40153,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6264966700550787705, guid: a413c48426fe9ca45836e23090a40153,
         type: 3}

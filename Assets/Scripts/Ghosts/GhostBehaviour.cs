@@ -72,9 +72,9 @@ namespace Ghosts
 
                 health.Damage();
                 movement.Rebound(hitDirection);
+                Camera.main.Shake();
+                DeactivateGhostOnHit();
             }
-
-            DeactivateGhostOnHit();
         }
 
         /// <summary>
