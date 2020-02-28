@@ -25,13 +25,19 @@ namespace Player
 
             if (HealthDefinition.IsDead)
             {
-                Instantiate(m_DamageParticle, transform.position, Quaternion.identity);
+                HandleDeathFeedback();
             }
 
             if (HealthDefinition.Lives <= 0)
             {
                 GameManager.Instance.GameOver();
             }
+        }
+
+        private void HandleDeathFeedback()
+        {
+            GetComponent<Animation>().Play();
+            Instantiate(m_DamageParticle, transform.position, Quaternion.identity);
         }
 
         public void Heal(int amount)

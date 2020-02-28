@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -24,8 +25,9 @@ namespace GridGeneration
             {
                 var location = GetRandomLocation(height, width);
 
-                while (locations.Contains(location))
+                while (locations.Contains(location) || locations.Count(l => l.y.Equals(location.y)) >= 2)
                 {
+                    Debug.Log("Tried to duplicate position or spawn more than 2 on the same Y axis");
                     location = GetRandomLocation(height, width);
                 }
 

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using GridGeneration;
+using Score;
 using UnityEngine;
 using Random = System.Random;
 
@@ -25,6 +26,11 @@ namespace Objects
 
         private Random m_Random;
 
+        private int m_ChunksCompleted;
+        private int m_MinGhosts = 0;
+        private int m_MaxGhosts = 4;
+        private int m_MaxGhostRows = 4;
+
         private void Awake()
         {
             m_GraveGenerator = new GraveGridGenerator();
@@ -43,6 +49,13 @@ namespace Objects
                 m_Threshold += m_ChunkSize;
                 GenerateChunk();
             }
+        }
+
+        private void ChunkCompletionScore()
+        {
+            var score = 10 * m_ChunksCompleted;
+            GameManager.Instance.ScoreManager.IncreaseScore(score);
+            Debug.Log($"{score} Score Awarded for {m_ChunksCompleted} Chunks Completed.");
         }
 
         /// <summary>
@@ -92,10 +105,9 @@ namespace Objects
         /// </summary>
         private void GenerateGhostGrid(Transform chunk, int heightOffset)
         {
-            var rows = 4;
-            var ghostCount = m_Random.Next(0, 4);
+            var ghostCount = m_Random.Next(m_MinGhosts, m_MaxGhosts);
             var gemCount = GenerateChanceOfGems();
-            var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, ghostCount, gemCount);
+            var locations = m_GhostGenerator.GenerateGhostLocations(m_MaxGhostRows, m_GameWidth, ghostCount, gemCount);
 
             Debug.Log($"Ghost Count: {ghostCount}  Gem Count: {gemCount}");
 

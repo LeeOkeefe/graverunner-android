@@ -1,5 +1,4 @@
-﻿using System;
-using Extensions;
+﻿using Extensions;
 using Player;
 using UnityEngine;
 
@@ -14,16 +13,18 @@ namespace Ghosts
         [SerializeField] private float m_MoveSpeed = 1f;
 
         private Vector3 m_TargetPos;
+        private Collider2D m_Collider;
 
         private void Awake()
         {
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
+            m_Collider = GetComponent<Collider2D>();
         }
 
         private void Start()
         {
             var pos = transform.position;
-            m_TargetPos = new Vector3(3, pos.y, pos.z);
+            m_TargetPos = pos.x > 1 ? new Vector3(m_MaxHorizontalMovement, pos.y, pos.z) : new Vector3(m_MinHorizontalMovement, pos.y, pos.z);
         }
 
         private void Update()
@@ -32,6 +33,10 @@ namespace Ghosts
             GetTargetPosition();
         }
 
+        /// <summary>
+        /// Sets the target position to the min or max,
+        /// and flips the ghost sprite depending on the direction
+        /// </summary>
         private void GetTargetPosition()
         {
             if (transform.position.x >= m_MaxHorizontalMovement)
@@ -48,6 +53,21 @@ namespace Ghosts
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.CompareTag("Ghost"))
+            {
+                var pos = transform.position;
+                if (m_Collider.GetColliderDirection(other.transform.position) == Vector3.right)
+                {
+                    m_TargetPos = new Vector3(m_MaxHorizontalMovement, pos.y, pos.z);
+                    m_SpriteRenderer.flipX = true;
+                }
+                else
+                {
+                    m_TargetPos = new Vector3(m_MinHorizontalMovement, pos.y, pos.z);
+                    m_SpriteRenderer.flipX = false;
+                }
+            }
+
             if (!other.CompareTag("Player"))
                 return;
 
@@ -56,16 +76,5 @@ namespace Ghosts
             var colliderDirection = other.GetColliderDirection(transform.position);
             other.GetComponent<PlayerMovement>().Rebound(colliderDirection);
         }
-
-        /*private void OnCollisionEnter2D(Collision2D other)
-        {
-            if (!other.transform.CompareTag("Player"))
-                return;
-
-            other.transform.GetComponent<HealthObject>().Damage();
-
-            var colliderDirection = other.GetCollisionDirection(transform.position);
-            other.transform.GetComponent<PlayerMovement>().Rebound(colliderDirection);
-        }*/
     }
 }

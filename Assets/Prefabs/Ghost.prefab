@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8927323426789631202}
   - component: {fileID: 8927323426789631203}
   - component: {fileID: 8045878110421878973}
+  - component: {fileID: 7902909795847433834}
   m_Layer: 0
   m_Name: Ghost
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,8 +248,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.024383664, y: 0.063417256}
-  m_Size: {x: 1.6724187, y: 2.2575474}
+  m_Offset: {x: 0.024383664, y: 0.058539286}
+  m_Size: {x: 1.6724187, y: 2.1307125}
   m_Direction: 0
 --- !u!95 &8927323426789631203
 Animator:
@@ -282,3 +283,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 1
+--- !u!50 &7902909795847433834
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927323426789631204}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

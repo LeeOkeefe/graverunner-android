@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Player
 {
@@ -51,7 +51,7 @@ namespace Player
         {
             if (m_TargetPos.x <= m_MinHorizontalMovement || m_TargetPos.x >= m_MaxHorizontalMovement)
             {
-                m_TargetPos += new Vector3(0, -1.5f, 0);
+                m_TargetPos += Vector3.down;
                 return;
             }
 
