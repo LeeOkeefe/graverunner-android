@@ -11,7 +11,11 @@ namespace Ads
 
         public static void Initialize()
         {
+#if UNITY_EDITOR
             Advertisement.Initialize(GameId, true);
+#elif UNITY_ANDROID
+            Advertisement.Initialize(GameId);
+#endif
         }
 
         public static void ShowAd()
