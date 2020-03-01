@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ads;
 using Effects;
 using Player;
 using Score;
@@ -17,7 +18,6 @@ internal sealed class GameManager : MonoBehaviour
     public HealthObject HealthObject;
     public Animation MinRestrictionLine;
     public EffectsManager EffectsManager;
-
     public List<Vector2> Grid;
     public ScoreManager ScoreManager;
 
@@ -37,10 +37,13 @@ internal sealed class GameManager : MonoBehaviour
     private void Start()
     {
         Screen.orientation = ScreenOrientation.Portrait;
+        AdsManager.Initialize();
     }
 
     public void GameOver()
     {
+        AdsManager.ShowAd();
+
         PlayerPrefs.SetInt("CurrentScore", ScoreManager.Score);
         var currentScore = PlayerPrefs.GetInt("CurrentScore");
         var bestScore = PlayerPrefs.GetInt("BestScore", 0);
