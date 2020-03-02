@@ -10,8 +10,8 @@ namespace UI
 
         private void Start()
         {
-            m_BestScore.text = PlayerPrefs.GetInt("BestScore").ToString();
-            m_CurrentScore.text = PlayerPrefs.GetInt("CurrentScore").ToString();
+            m_BestScore.text = PlayerPrefs.GetFloat("BestScore").ToString();
+            m_CurrentScore.text = PlayerPrefs.GetFloat("CurrentScore").ToString();
         }
     }
 }

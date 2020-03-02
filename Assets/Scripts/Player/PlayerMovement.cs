@@ -14,14 +14,15 @@ namespace Player
         [SerializeField] private float m_MoveSpeed = 1;
 
         private bool m_ReversedControls;
-
         private float m_NextBonusRow = 47;
+        private TrailRenderer m_TrailRenderer;
 
         private void Start()
         {
             var startHeight = transform.position.y;
             m_FurthestDistance = startHeight;
             m_TargetPos = transform.position;
+            m_TrailRenderer = GetComponent<TrailRenderer>();
         }
 
         private void Update()
@@ -39,9 +40,19 @@ namespace Player
         /// <summary>
         /// Modifies the constant move speed on the Y-axis
         /// </summary>
-        public void ModifyMoveSpeed(float speed)
+        public void EditMoveSpeed(float speed)
         {
-            m_MoveSpeed += speed;
+            m_MoveSpeed = speed;
+
+            if (m_MoveSpeed > 1)
+            {
+                m_TrailRenderer.startColor = Color.red;
+                m_TrailRenderer.endColor = Color.white;
+            }
+            else
+            {
+                m_TrailRenderer.startColor = Color.white;
+            }
         }
 
         /// <summary>
