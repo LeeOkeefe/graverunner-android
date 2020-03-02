@@ -16,6 +16,8 @@ namespace Effects
         [SerializeField] private Image m_FlipCameraIcon;
         [SerializeField] private Image m_SpeedBoostIcon;
         [SerializeField] private Image m_ReversedControlsIcon;
+        [SerializeField] private Image m_InvincibilityIcon;
+
         [SerializeField] private EffectsUI m_EffectsUI;
 
         private Random m_Random;
@@ -34,7 +36,8 @@ namespace Effects
             {
                 () => FlipCamera(2),
                 () => ReverseControls(3),
-                () => SpeedBoost(1.5f, 5)
+                () => SpeedBoost(1.5f, 5),
+                () => TemporaryInvincibility(5)
             };
         }
 
@@ -109,6 +112,24 @@ namespace Effects
             {
                 playerMovement.ReverseInput(false);
                 m_EffectsUI.UpdateSlot(m_ReversedControlsIcon, false);
+            });
+
+            m_ActiveEffects.Add(effect);
+        }
+
+        /// <summary>
+        /// Invincibility for the player health object for the set duration
+        /// </summary>
+        public void TemporaryInvincibility(float duration)
+        {
+            var healthObject = GameManager.Instance.HealthObject;
+            healthObject.SetInvincibility(true);
+            m_EffectsUI.UpdateSlot(m_InvincibilityIcon, true);
+
+            var effect = new Effect(duration, () =>
+            {
+                healthObject.SetInvincibility(false);
+                m_EffectsUI.UpdateSlot(m_InvincibilityIcon, false);
             });
 
             m_ActiveEffects.Add(effect);

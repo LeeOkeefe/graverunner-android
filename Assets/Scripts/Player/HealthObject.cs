@@ -9,6 +9,8 @@ namespace Player
 
         public HealthDefinition HealthDefinition;
 
+        private bool m_IsInvincible;
+
         private void Awake()
         {
             HealthDefinition = new HealthDefinition(m_LivesOnStart);
@@ -16,11 +18,17 @@ namespace Player
 
         public void Damage()
         {
+            if (m_IsInvincible)
+                return;
+
             Damage(HealthDefinition.MaxHealth);
         }
 
         public void Damage(int amount)
         {
+            if (m_IsInvincible)
+                return;
+
             HealthDefinition.Damage(amount);
 
             if (HealthDefinition.IsDead)
@@ -43,6 +51,11 @@ namespace Player
         public void Heal(int amount)
         {
             HealthDefinition.Heal(amount);
+        }
+
+        public void SetInvincibility(bool isInvincible)
+        {
+            m_IsInvincible = isInvincible;
         }
     }
 }
