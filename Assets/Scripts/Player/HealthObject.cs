@@ -6,7 +6,9 @@ namespace Player
     {
         [SerializeField] [Range(1, 3)] private int m_LivesOnStart;
         [SerializeField] private GameObject m_DamageParticle;
+
         private SpriteRenderer m_SpriteRenderer;
+        private Animation m_Anim;
 
         public HealthDefinition HealthDefinition;
 
@@ -18,6 +20,7 @@ namespace Player
         {
             HealthDefinition = new HealthDefinition(m_LivesOnStart);
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
+            m_Anim = GetComponent<Animation>();
         }
 
         private void Start()
@@ -54,7 +57,7 @@ namespace Player
 
         private void HandleDeathFeedback()
         {
-            GetComponent<Animation>().Play();
+            m_Anim.Play();
             Instantiate(m_DamageParticle, transform.position, Quaternion.identity);
         }
 
