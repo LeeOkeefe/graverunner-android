@@ -15,7 +15,7 @@ namespace Player
 
             var distance = Vector3.Distance(pos, targetPosition);
 
-            m_MovementSpeed = distance <= 1 ? 5f : 15f;
+            m_MovementSpeed = distance <= 1 ? 5f : 7.5f;
 
             transform.position = Vector3.MoveTowards(pos, targetPosition, m_MovementSpeed * Time.deltaTime);
         }
