@@ -4,18 +4,26 @@ namespace Score
 {
     public class ScoreManager
     {
-        public int Score { get; private set; }
+        public float Score { get; private set; }
+        public float Multiplier { get; private set; }
         private TextMeshProUGUI ScoreText => GameManager.Instance.ScoreText;
+
+        public ScoreManager()
+        {
+            Score = 0;
+            Multiplier = 1;
+            ScoreText.text = $"{Score}";
+        }
 
         public void IncreaseScore()
         {
-            Score++;
+            Score += (1 * Multiplier);
             ScoreText.text = $"{Score}";
         }
 
         public void IncreaseScore(int amount)
         {
-            Score += amount;
+            Score += (amount * Multiplier);
             ScoreText.text = $"{Score}";
         }
 
@@ -31,10 +39,9 @@ namespace Score
             ScoreText.text = $"{Score}";
         }
 
-        public void ResetScore()
+        public void HandleScoreMultiplier(float multiplier)
         {
-            Score = 0;
-            ScoreText.text = $"{Score}";
+            Multiplier = multiplier;
         }
     }
 }

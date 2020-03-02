@@ -30,12 +30,11 @@ internal sealed class GameManager : MonoBehaviour
 
         if (Instance == null)
             Instance = this;
-
-        ScoreManager = new ScoreManager();
     }
 
     private void Start()
     {
+        ScoreManager = new ScoreManager();
         Screen.orientation = ScreenOrientation.Portrait;
         AdsManager.Initialize();
     }
@@ -44,13 +43,13 @@ internal sealed class GameManager : MonoBehaviour
     {
         AdsManager.ShowAd();
 
-        PlayerPrefs.SetInt("CurrentScore", ScoreManager.Score);
-        var currentScore = PlayerPrefs.GetInt("CurrentScore");
-        var bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        PlayerPrefs.SetFloat("CurrentScore", ScoreManager.Score);
+        var currentScore = PlayerPrefs.GetFloat("CurrentScore");
+        var bestScore = PlayerPrefs.GetFloat("BestScore", 0);
 
         if (currentScore > bestScore)
         {
-            PlayerPrefs.SetInt("BestScore", currentScore);
+            PlayerPrefs.SetFloat("BestScore", currentScore);
             PlayerPrefs.Save();
         }
 

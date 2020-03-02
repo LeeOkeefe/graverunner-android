@@ -17,6 +17,7 @@ namespace Effects
         [SerializeField] private Image m_SpeedBoostIcon;
         [SerializeField] private Image m_ReversedControlsIcon;
         [SerializeField] private Image m_InvincibilityIcon;
+        [SerializeField] private Image m_BoostScoreIcon;
 
         [SerializeField] private EffectsUI m_EffectsUI;
 
@@ -36,8 +37,9 @@ namespace Effects
             {
                 () => FlipCamera(2),
                 () => ReverseControls(3),
-                () => SpeedBoost(1.5f, 5),
-                () => TemporaryInvincibility(5)
+                () => SpeedBoost(2.5f, 5),
+                () => Invincibility(5),
+                () => ScoreBoost(5, 2)
             };
         }
 
@@ -87,12 +89,12 @@ namespace Effects
         public void SpeedBoost(float duration, float speed)
         {
             var playerMovement = GameManager.Instance.PlayerMovement;
-            playerMovement.ModifyMoveSpeed(speed);
+            playerMovement.EditMoveSpeed(speed);
             m_EffectsUI.UpdateSlot(m_SpeedBoostIcon, true);
 
             var effect = new Effect(duration, () =>
             {
-                playerMovement.ModifyMoveSpeed(-speed);
+                playerMovement.EditMoveSpeed(1);
                 m_EffectsUI.UpdateSlot(m_SpeedBoostIcon, false);
             });
 
@@ -120,7 +122,7 @@ namespace Effects
         /// <summary>
         /// Invincibility for the player health object for the set duration
         /// </summary>
-        public void TemporaryInvincibility(float duration)
+        public void Invincibility(float duration)
         {
             var healthObject = GameManager.Instance.HealthObject;
             healthObject.SetInvincibility(true);
@@ -130,6 +132,24 @@ namespace Effects
             {
                 healthObject.SetInvincibility(false);
                 m_EffectsUI.UpdateSlot(m_InvincibilityIcon, false);
+            });
+
+            m_ActiveEffects.Add(effect);
+        }
+
+        /// <summary>
+        /// Temporarily multiply the amount of score awarded
+        /// </summary>
+        public void ScoreBoost(float duration, float multiplier)
+        {
+            var scoreManager = GameManager.Instance.ScoreManager;
+            scoreManager.HandleScoreMultiplier(multiplier);
+            m_EffectsUI.UpdateSlot(m_BoostScoreIcon, true);
+
+            var effect = new Effect(duration, () =>
+            {
+                scoreManager.HandleScoreMultiplier(1);
+                m_EffectsUI.UpdateSlot(m_BoostScoreIcon, false);
             });
 
             m_ActiveEffects.Add(effect);

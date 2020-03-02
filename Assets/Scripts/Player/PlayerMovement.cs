@@ -39,9 +39,9 @@ namespace Player
         /// <summary>
         /// Modifies the constant move speed on the Y-axis
         /// </summary>
-        public void ModifyMoveSpeed(float speed)
+        public void EditMoveSpeed(float speed)
         {
-            m_MoveSpeed += speed;
+            m_MoveSpeed = speed;
         }
 
         /// <summary>
