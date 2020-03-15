@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
+
 using Random = System.Random;
 
 namespace GridGeneration
 {
     internal sealed class GhostGridGenerator
     {
-        private Random m_Random;
+        private readonly Random m_Random;
+        private const int MaxGhostsPerRow = 2;
 
         public GhostGridGenerator()
         {
@@ -17,21 +21,63 @@ namespace GridGeneration
         /// <summary>
         /// Generate unique locations within a grid
         /// </summary>
-        public List<Vector2> GenerateGhostLocations(int height, int width, int ghostCount, int gemCount)
+        public List<Vector2> GenerateGhostLocations(int height, int width, int ghostCount)
+        {
+            var possibleLocations = GeneratePossibleLocations(height, width);
+
+            var locations = new List<Vector2>();
+
+            for (var i = 0; i < ghostCount; i++)
+            {
+                var location = GetAndRemoveRandomLocation(possibleLocations);
+                locations.Add(location);
+
+                RemoveFullRows(possibleLocations);
+            }
+
+            Debug.Log(locations.Count);
+            return locations;
+        }
+
+        public List<Vector2> GenerateGemLocations(int rows, int gameWidth, int gemCount)
+        {
+            var possibleLocations = GeneratePossibleLocations(rows, gameWidth);
+
+            var randomLocations = new List<Vector2>();
+
+            for (var i = 0; i < gemCount; i++)
+            {
+                randomLocations.Add(GetAndRemoveRandomLocation(possibleLocations));
+            }
+            return randomLocations;
+        }
+
+        private static void RemoveFullRows(ICollection<Vector2> possibleLocations)
+        {
+            var groups = possibleLocations.GroupBy(g => g.y);
+            foreach (var group in groups)
+            {
+                if (group.Count() != MaxGhostsPerRow) 
+                    continue;
+
+                Debug.Log("We have 2 ghosts with y value " + group.Key);
+                foreach (var value in group)
+                {
+                    possibleLocations.Remove(value);
+                }
+            }
+        }
+
+        private static List<Vector2> GeneratePossibleLocations(int height, int width)
         {
             var locations = new List<Vector2>();
 
-            for (var i = 0; i < ghostCount + gemCount; i++)
+            for (var i = 0; i < height; i++)
             {
-                var location = GetRandomLocation(height, width);
-
-                while (locations.Contains(location) || locations.Count(l => l.y.Equals(location.y)) >= 2)
+                for (var j = 0; j < width; j++)
                 {
-                    Debug.Log("Tried to duplicate position or spawn more than 2 on the same Y axis");
-                    location = GetRandomLocation(height, width);
+                    locations.Add(new Vector2(i, j));
                 }
-
-                locations.Add(location);
             }
 
             return locations;
@@ -40,12 +86,15 @@ namespace GridGeneration
         /// <summary>
         /// Returns a random location within a specified grid space
         /// </summary>
-        private Vector2 GetRandomLocation(int height, int width)
+        private Vector2 GetAndRemoveRandomLocation(IList<Vector2> locations)
         {
-            var x = m_Random.Next(width);
-            var y = m_Random.Next(height);
+            if (!locations.Any())
+                throw new Exception("Did not have location for object");
 
-            return new Vector2(x, y);
+            var randomIndex = m_Random.Next(locations.Count);
+            var randomLocation = locations[randomIndex];
+            locations.RemoveAt(randomIndex);
+            return randomLocation;
         }
     }
 }

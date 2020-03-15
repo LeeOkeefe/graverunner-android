@@ -23,11 +23,11 @@ namespace Objects
         private float m_Threshold = 5;
         private float m_NextSpawnY = 30;
         private int m_ChunkSize = 30;
+        private int m_GridPadding = 1;
+        private int m_InitialChunkOffset = -13;
 
         private Random m_Random;
 
-        private int m_MinGhosts = 0;
-        private int m_MaxGhosts = 5;
         private int m_MaxGhostRows = 8;
 
         private void Awake()
@@ -55,21 +55,25 @@ namespace Objects
         /// </summary>
         private void GenerateChunk()
         {
-            var currentOffset = -13;
+            var usedRows = 2;
 
             var chunk = Instantiate(m_Floor, new Vector3(1.5f, m_NextSpawnY, 0), Quaternion.identity);
 
-            currentOffset += GenerateGraveGrid(chunk.transform, currentOffset, 10);
-
-            currentOffset += GenerateGhostGrid(chunk.transform, currentOffset);
-
-            var remainingRows = m_ChunkSize - (currentOffset - -13);
-
-            GenerateGraveGrid(chunk.transform, currentOffset, remainingRows);
-
-            if (remainingRows < 0)
+            usedRows += GenerateGraveGrid(chunk.transform, m_InitialChunkOffset + usedRows, 4, 10);
+            
+            usedRows += m_GridPadding;
+            
+            usedRows += GenerateGhostGrid(chunk.transform, m_InitialChunkOffset + usedRows);
+            
+            usedRows += m_GridPadding;
+            
+            var remainingRows = m_ChunkSize - usedRows - 2;
+            
+            usedRows += GenerateGraveGrid(chunk.transform, m_InitialChunkOffset + usedRows, remainingRows, remainingRows);
+            
+            if (usedRows > m_ChunkSize)
             {
-                throw new Exception($"Max rows in chunk is {m_ChunkSize} but contained {currentOffset - -13} rows");
+                throw new Exception($"Max rows in chunk is {m_ChunkSize} but contained {usedRows} rows");
             }
 
             m_NextSpawnY += m_ChunkSize;
@@ -78,9 +82,9 @@ namespace Objects
         /// <summary>
         /// Generate a grid of gravestones with a path of coins
         /// </summary>
-        private int GenerateGraveGrid(Transform chunk, int heightOffset, int maxRows)
+        private int GenerateGraveGrid(Transform chunk, int heightOffset, int minRows, int maxRows)
         {
-            var numberOfRows = m_Random.Next(2, maxRows);
+            var numberOfRows = m_Random.Next(minRows, maxRows + 1);
 
             var openPath = m_GraveGenerator.GeneratePath(numberOfRows, 4);
 
@@ -106,25 +110,27 @@ namespace Objects
         /// </summary>
         private int GenerateGhostGrid(Transform chunk, int heightOffset)
         {
-            var ghostCount = m_Random.Next(m_MinGhosts, m_MaxGhosts);
             var rows = m_Random.Next(2, m_MaxGhostRows);
+            var ghostCount = m_Random.Next(1, rows + 1);
             var gemCount = GenerateChanceOfGems();
-            var locations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, ghostCount, gemCount);
+            var ghostLocations = m_GhostGenerator.GenerateGhostLocations(rows, m_GameWidth, ghostCount);
 
             Debug.Log($"Ghost Count: {ghostCount}  Gem Count: {gemCount}");
-
-            for (var i = 0; i < locations.Count; i++)
+            
+            foreach (var location in ghostLocations)
             {
-                if (gemCount > 0)
+                var go = Instantiate(m_Ghost, Vector3.zero, Quaternion.identity, chunk);
+                go.transform.localPosition = new Vector2(location.x - 1.5f, location.y + heightOffset);
+            }
+
+            if (gemCount > 0)
+            {
+                var gemLocations = m_GhostGenerator.GenerateGemLocations(rows, m_GameWidth, gemCount);
+                foreach (var location in gemLocations)
                 {
                     var gem = Instantiate(m_Gem, Vector3.zero, Quaternion.identity, chunk);
-                    gem.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
-                    gemCount--;
-                    continue;
+                    gem.transform.localPosition = new Vector2(location.x - 1.5f, location.y + heightOffset);
                 }
-
-                var go = Instantiate(m_Ghost, Vector3.zero, Quaternion.identity, chunk);
-                go.transform.localPosition = new Vector2(locations[i].x - 1.5f, locations[i].y + heightOffset);
             }
 
             return rows;
@@ -147,7 +153,7 @@ namespace Objects
                 return 2;
             }
 
-            if (value <= 20)
+            if (value <= 30)
             {
                 return 1;
             }
