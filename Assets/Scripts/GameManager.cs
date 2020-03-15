@@ -21,6 +21,8 @@ internal sealed class GameManager : MonoBehaviour
     public List<Vector2> Grid;
     public ScoreManager ScoreManager;
 
+    private AudioSource m_AudioSource;
+
     // Ensure only one instance of the GameManager exists
     //
     public void Awake()
@@ -35,10 +37,17 @@ internal sealed class GameManager : MonoBehaviour
     private void Start()
     {
         ScoreManager = new ScoreManager();
+        m_AudioSource = GetComponent<AudioSource>();
+
         Screen.orientation = ScreenOrientation.Portrait;
         AdsManager.Initialize();
     }
 
+    public void PlaySoundEffect(AudioClip audioClip)
+    {
+        m_AudioSource.PlayOneShot(audioClip);
+    }
+    
     public void GameOver()
     {
         AdsManager.ShowAd();

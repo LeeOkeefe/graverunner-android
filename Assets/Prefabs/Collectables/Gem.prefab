@@ -120,3 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a78fbb9da2be249a9bf8eb0c703733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PowerUpAudioClip: {fileID: 8300000, guid: 67a2ed7aef2407042a0e6639ff590497, type: 3}

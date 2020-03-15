@@ -132,3 +132,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Particles: {fileID: 100000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}
+  m_CollectCoinAudioClip: {fileID: 8300000, guid: dd118c658267cd04c9bcb12e10e698f8,
+    type: 3}
