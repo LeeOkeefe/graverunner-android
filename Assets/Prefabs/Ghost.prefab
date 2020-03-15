@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 1
-  m_GhostAudioClip: {fileID: 8300000, guid: 273a7397cc8a81447bfa01fb6bf5ffc3, type: 3}
+  m_GhostAudioClip: {fileID: 8300000, guid: b2db46a2cfa28da42abef3a64f5a0706, type: 3}
 --- !u!50 &7902909795847433834
 Rigidbody2D:
   serializedVersion: 4
