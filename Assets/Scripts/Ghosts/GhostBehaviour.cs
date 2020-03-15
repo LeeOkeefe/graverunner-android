@@ -18,6 +18,8 @@ namespace Ghosts
         private Animator m_Anim;
         private bool m_IsMoving = true;
 
+        [SerializeField] private AudioClip m_GhostAudioClip;
+
         private static readonly int Death = Animator.StringToHash("Death");
 
         private void Awake()
@@ -31,6 +33,7 @@ namespace Ghosts
         {
             var pos = transform.position;
             m_TargetPos = pos.x > 1 ? new Vector3(m_MaxHorizontalMovement, pos.y, pos.z) : new Vector3(m_MinHorizontalMovement, pos.y, pos.z);
+            GameManager.Instance.PlaySoundEffect(m_GhostAudioClip);
         }
 
         private void Update()

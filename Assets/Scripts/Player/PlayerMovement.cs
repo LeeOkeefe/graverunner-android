@@ -13,9 +13,14 @@ namespace Player
         [SerializeField] private float m_MovementSpeed = 6;
         [SerializeField] private float m_MoveSpeed = 1;
 
+        [SerializeField] private AudioClip m_MoveAudioClip;
+        private AudioSource m_AudioSource;
+
         private bool m_ReversedControls;
         private float m_NextBonusRow = 47;
         private TrailRenderer m_TrailRenderer;
+
+        private bool m_DisabledInput;
 
         private void Start()
         {
@@ -23,10 +28,14 @@ namespace Player
             m_FurthestDistance = startHeight;
             m_TargetPos = transform.position;
             m_TrailRenderer = GetComponent<TrailRenderer>();
+            m_AudioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
         {
+            if (m_DisabledInput)
+                return;
+
             AutoscrollPlayer();
 
             CalculateRowProgression(transform.position.y);
@@ -35,6 +44,11 @@ namespace Player
             {
                 transform.position = Vector3.MoveTowards(transform.position, m_TargetPos, m_MovementSpeed * Time.deltaTime);
             }
+        }
+
+        public void DisableInput()
+        {
+            m_DisabledInput = true;
         }
 
         /// <summary>
@@ -91,6 +105,7 @@ namespace Player
                 return;
             }
 
+            m_AudioSource.PlayOneShot(m_MoveAudioClip);
             m_TargetPos = targetPos;
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Player
 {
@@ -16,11 +17,17 @@ namespace Player
         private Color m_InvincibilityColour;
         private Color m_NormalColour;
 
+        private AudioSource m_AudioSource;
+        [SerializeField] private AudioClip m_HitAudioClip;
+        [SerializeField] private AudioClip m_LifeLostAudioClip;
+        [SerializeField] private AudioClip m_GameOverAudioClip;
+
         private void Awake()
         {
             HealthDefinition = new HealthDefinition(m_LivesOnStart);
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
             m_Anim = GetComponent<Animation>();
+            m_AudioSource = GetComponent<AudioSource>();
         }
 
         private void Start()
@@ -34,6 +41,7 @@ namespace Player
             if (m_IsInvincible)
                 return;
 
+            m_AudioSource.PlayOneShot(m_HitAudioClip);
             Damage(HealthDefinition.MaxHealth);
         }
 
@@ -46,13 +54,23 @@ namespace Player
 
             if (HealthDefinition.IsDead)
             {
+                m_AudioSource.PlayOneShot(m_LifeLostAudioClip);
                 HandleDeathFeedback();
             }
 
             if (HealthDefinition.Lives <= 0)
             {
-                GameManager.Instance.GameOver();
+                StartCoroutine(GameOver());
             }
+        }
+
+        private IEnumerator GameOver()
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+            GetComponent<PlayerMovement>().DisableInput();
+            m_AudioSource.PlayOneShot(m_GameOverAudioClip);
+            yield return new WaitWhile(() => m_AudioSource.isPlaying);
+            GameManager.Instance.GameOver();
         }
 
         private void HandleDeathFeedback()
