@@ -33,7 +33,6 @@ namespace Ghosts
         {
             var pos = transform.position;
             m_TargetPos = pos.x > 1 ? new Vector3(m_MaxHorizontalMovement, pos.y, pos.z) : new Vector3(m_MinHorizontalMovement, pos.y, pos.z);
-            GameManager.Instance.PlaySoundEffect(m_GhostAudioClip);
         }
 
         private void Update()
